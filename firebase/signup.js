@@ -22,7 +22,13 @@ function createUser(email, password) {
 		});
 	} else {
 		auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-			document.location.replace('profile.html');
+			auth.currentUser.sendEmailVerification().then(() => {
+				auth.signOut().then(() => {
+					console.log("sent");
+					document.location.replace('login.html');
+				});
+			});
+
 		}).catch(err => {
 			$("#signup-error").html(err.message);
 		});;
