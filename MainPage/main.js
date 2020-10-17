@@ -19,8 +19,8 @@ auth.onAuthStateChanged((user) => {
 			let data = doc.data();
 			let friends = data.friends;
 
-			for (let i=0;i<friends.length;i++) {
-				db.collection("users").doc(friends[i]).get().then((docFriend) => {
+			friends.forEach((friend) => {
+				db.collection("users").doc(friend).get().then((docFriend) => {
 					let friendData = docFriend.data();
 
 					storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
@@ -28,7 +28,7 @@ auth.onAuthStateChanged((user) => {
 						$("#chat-list").append(elements);
 					});
 				});
-			}
+			});
 
 			db.collection("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
 				snap.forEach((docOther) => {
