@@ -11,13 +11,13 @@ Talk.ready.then(function() {
 					let userData = doc.data();
 					let otherData = otherDoc.data();
 
-					var other = new Talk.User({
+					var me = new Talk.User({
 				        id: auth.currentUser.id,
 				        name: userData.name,
 				        email: userData.email,
 				        photoUrl: "https://demo.talkjs.com/img/alice.jpg"
 				    });
-				    var me = new Talk.User({
+				    var other = new Talk.User({
 				        id: urlParams.get("id"),
 				        name: otherData.name,
 				        email: otherData.email,
