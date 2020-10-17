@@ -28,11 +28,11 @@ function createUser(email, password) {
 					email: email,
 					profilePic: 'default.png',
 					tags: []
-				});
-
-				auth.signOut().then(() => {
-					console.log("sent");
-					document.location.replace('/login.html');
+				}).then(() => {
+					auth.signOut().then(() => {
+						console.log("sent");
+						document.location.replace('login.html');
+					});
 				});
 			});
 
