@@ -39,7 +39,7 @@
 	<aside class='aside'>
 		<h1 class='white'>Ongoing Chats</h1>
 		<hr class='white white-border' />
-		<div class='chat-list'></div>
+		<div id="chat-list" class='chat-list'></div>
 	</aside>
 	<div class='aside-background'><img src="../assets/orangeblue.jpg" alt=""></div>
 	<main class='main white-background'>
@@ -51,19 +51,29 @@
 			<input type="text">
 			<button>Search</button>
 		</div>
+		<div id="search-results">
+			<div id="search-results-name">
+
+			</div>
+			<hr>
+			<div id="similar-tags">
+
+			</div>
+		</div>
 	</main>
 	<aside class='pear-holder white-background'>
 	</aside>
-	
+
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-	<script src="firebase/config.js"></script>
-	<script src="firebase/login.js"></script>
-	<script src="firebase/validate_login.js"></script>
+	<script src="../firebase/config.js"></script>
+	<!-- <script src="../firebase/login.js"></script> -->
+	<script src="../firebase/validate_login.js"></script>
+	<script src="main.js"></script>
 </body>
 
 </html>

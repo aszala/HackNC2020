@@ -5,13 +5,18 @@ profileForm.addEventListener('submit', (e) => {
 
 	let tags = [];
 	let mediaPath = document.getElementById("profile-image-upload").files[0];
+	let firstname = $("#first-name").html();
+	let lastname = $("#last-name").html();
 
 	if (mediaPath) {
 		updateFirebaseProfile(mediaPath);
 	}
 
 	db.collection("users").doc(auth.currentUser.uid).update({
-		tags: tags
+		tags: tags,
+		name: firstname + " " + lastname,
+		firstname: firstname,
+		lastname: lastname
 	});
 });
 

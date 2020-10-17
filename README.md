@@ -10,7 +10,7 @@ http://pearpeers.space
  - David Lu
 
 # Technologies
-The front-end was built using HTML/CSS/JS.
-The backend was built using Google Firebase.
-The Web App is deployed using Google Kubernetes Engine with Docker.
-Domain was registered using Domain.com
+- The front-end was built using HTML/CSS/JS.
+- The backend was built using Google Firebase.
+- The Web App is deployed using Google Kubernetes Engine with Docker.
+- Domain was registered using Domain.com
