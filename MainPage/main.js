@@ -1,5 +1,5 @@
 function search(query) {
-	db.collections("users").where("name", ">=", query).get().then((snap) => {
+	db.collection("users").where("name", ">=", query).get().then((snap) => {
 		snap.forEach((doc) => {
 			let data = doc.data();
 
@@ -15,12 +15,12 @@ auth.onAuthStateChanged((user) => {
 	if (!user) {
 		document.location.replace("/login.html");
 	} else {
-		db.collections("users").doc(auth.currentUser.uid).get().then((doc) => {
+		db.collection("users").doc(auth.currentUser.uid).get().then((doc) => {
 			let data = doc.data();
-			let friends = doc.friends;
+			let friends = data.friends;
 
 			for (let i=0;i<friends.length;i++) {
-				db.collections("users").doc(friends[i]).get().then((docFriend) => {
+				db.collection("users").doc(friends[i]).get().then((docFriend) => {
 					let friendData = docFriend.data();
 
 					storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
@@ -30,7 +30,7 @@ auth.onAuthStateChanged((user) => {
 				});
 			}
 
-			db.collections("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
+			db.collection("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
 				snap.forEach((docOther) => {
 					let dataOther = docOther.data();
 
