@@ -9,6 +9,12 @@ var canvas, ctx, flag = false,
 
 var x = "black",
 y = 2;
+// We prob need a timer to constantly store and update the other persons array
+otherBoard = []        //  <We should store the firebase thing here
+// sample drawing (1 STROKE MOUSE DOWN TO MOUSE UP)
+otherBoard = ["253,199,black,1602965201920"]
+// EX: repeat every 5 seconds updateDrawingBoard(otherArr)
+
     
 function init() {
     canvas = document.getElementById('can');
@@ -17,17 +23,24 @@ function init() {
     h = canvas.height;
 
     canvas.addEventListener("mousemove", function (e) {
+        updateDrawingBoard(otherBoard)
         findxy('move', e)
     }, false);
     canvas.addEventListener("mousedown", function (e) {
         findxy('down', e)
     }, false);
     canvas.addEventListener("mouseup", function (e) {
+        
         findxy('up', e)
+        // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
+        firebase_arr = [];
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
+        // SEND ARRAY TO FIREBASE HERE -------------------------------------
+        firebase_arr = [];
     }, false);
+    
 }
     
 function color(obj) {
@@ -89,6 +102,9 @@ function findxy(res, e) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
             console.log(firebase_arr[firebase_arr.length - 1])
+
+            // SEND ARRAY TO FIREBASE -------------------------------------
+            firebase_arr = []
             update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
             ctx.fillStyle = x;
@@ -109,7 +125,7 @@ function findxy(res, e) {
             if (update_counter % 3 == 0) {
                 var d = new Date();
                 firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-                console.log(firebase_arr[firebase_arr.length - 1])
+                console.log(firebase_arr)
             }
             update_counter = (update_counter + 1 % 3)
             draw();
@@ -128,3 +144,50 @@ function save() {
 
 
 // TAKE IN THE OTHER PERSONS ARRAY AND CREATE A NEW DRAWING OR UPDATE THE CANVAS CANVAS
+
+var tempXp = 0;
+var tempYp = 0;
+var tempColorp = "black";
+var tempTimep = 0;
+
+function updateDrawingBoard(board) {
+    for (var i = 0; i < board.length - 1; i++) {
+        var tempSplitArrc = board[i].split(',')
+        var tempXc = tempSplitArrc[0]
+        var tempYc = tempSplitArrc[1]
+        var tempColorc = tempSplitArrc[2]
+        var tempTimec = tempSplitArrc[3]    
+        if (i != 0) {
+            updateDraw(tempXp, tempYp, tempXc, tempYc, tempColorc)
+        }
+        tempXp = tempXc;
+        tempYp = tempYc;
+        tempColorp = tempColorc;
+        tempTimep = tempTimec;
+    }
+    if (board.length == 1) {
+        var tempSplitArrc = board[i].split(',')
+        var tempXc = tempSplitArrc[0]
+        var tempYc = tempSplitArrc[1]
+        var tempColorc = tempSplitArrc[2]
+        var tempTimec = tempSplitArrc[3] 
+        // CREATES A DOT
+        ctx.beginPath();
+        ctx.fillStyle = tempColorc;
+        ctx.fillRect(tempXc, tempYc, 2, 2);
+        ctx.closePath();
+    }
+
+}
+
+function updateDraw(pX, pY, cX, cY, cColor) {
+    ctx.beginPath();
+    ctx.moveTo(pX, pY);
+    ctx.lineTo(cX, cY);
+    ctx.strokeStyle = cColor;
+    ctx.lineWidth = y;
+    ctx.stroke();
+    ctx.closePath();
+}
+
+

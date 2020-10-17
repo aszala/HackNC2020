@@ -1,26 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title>Chat</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-	</head>
-	<body>
-		<script>
-			(function(t,a,l,k,j,s){
-			s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
-			;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
-			.push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
-		</script>
 
-		<div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
-		    <i>Loading chat...</i>
+<head>
+	<meta charset="utf-8">
+	<title>Chat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../styles.css">
+	<link rel="stylesheet" href="../../colors.css">
+	<link rel="stylesheet" href="../main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/d38a5bbed1.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<script>
+		(function (t, a, l, k, j, s) {
+			s = a.createElement('script');
+			s.async = 1;
+			s.src = "https://cdn.talkjs.com/talk.js";
+			a.head.appendChild(s);
+			k = t.Promise;
+			t.Talk = {
+				v: 3,
+				ready: {
+					then: function (f) {
+						if (k) return new k(function (r, e) {
+							l.push([f, r, e])
+						});
+						l
+							.push([f])
+					},
+					catch: function () {
+						return k && new k()
+					},
+					c: l
+				}
+			};
+		})(window, document, []);
+	</script>
+
+	<header class='header elevated white-background'>
+		<h2>HackNC 2020</h2>
+	</header>
+	<nav class='nav'>
+		<ul>
+			<li>
+				<a href='main.html'>
+					<i class="fas fa-home"></i>
+				</a>
+			</li>
+			<li>
+				<a href='profile.html'>
+					<i class="fas fa-user"></i>
+				</a>
+			</li>
+			<li>
+				<a>
+					+
+				</a>
+			</li>
+			<li>
+				<a href='../index.html'>
+					<i class="fas fa-sign-out-alt"></i>
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<aside class='aside'>
+		<h1 class='white'>Ongoing Chats</h1>
+		<hr class='white white-border' />
+		<div class='chat-list'></div>
+	</aside>
+	<div class='aside-background'><img src="../../assets/orangeblue.jpg" alt=""></div>
+	<main class='main white-background'>
+		<div id="talkjs-container">
+			<i>Loading chat...</i>
 		</div>
+	</main>
 
-		<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-        <script src="../../firebase/config.js" charset="utf-8"></script>
-		<script src="chat.js" charset="utf-8"></script>
-	</body>
+	<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+	<script src="../../firebase/config.js" charset="utf-8"></script>
+	<script src="chat.js" charset="utf-8"></script>
+</body>
+
 </html>
