@@ -1,27 +1,41 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
 Talk.ready.then(function() {
-    var me = new Talk.User({
-        id: "123456",
-        name: "Alice",
-        email: "alice@example.com",
-        photoUrl: "https://demo.talkjs.com/img/alice.jpg",
-        welcomeMessage: "Hey there! How are you? :-)"
-    });
-    window.talkSession = new Talk.Session({
-        appId: "tPPos2DI",
-        me: me
-    });
-    var other = new Talk.User({
-        id: "654321",
-        name: "Sebastian",
-        email: "Sebastian@example.com",
-        photoUrl: "https://demo.talkjs.com/img/sebastian.jpg",
-        welcomeMessage: "Hey, how can I help?"
-    });
+	auth.onAuthStateChanged((user) => {
+		if (!user) {
+			document.location.replace("login.html");
+		} else {
+			db.collection('users').doc(auth.currentUser.id).get().then((doc) => {
+				db.collection('users').doc(urlParams.get("id")).get().then((otherDoc) => {
+					let userData = doc.data();
+					let otherData = otherDoc.data();
 
-    var conversation = talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other))
-    conversation.setParticipant(me);
-    conversation.setParticipant(other);
+					var other = new Talk.User({
+				        id: auth.currentUser.id,
+				        name: userData.name,
+				        email: userData.email,
+				        photoUrl: "https://demo.talkjs.com/img/alice.jpg"
+				    });
+				    var me = new Talk.User({
+				        id: urlParams.get("id"),
+				        name: otherData.name,
+				        email: otherData.email,
+				        photoUrl: "https://demo.talkjs.com/img/sebastian.jpg"
+				    });
+					window.talkSession = new Talk.Session({
+						appId: "tPPos2DI",
+						me: me
+					});
 
-    var inbox = talkSession.createInbox({selected: conversation});
-    inbox.mount(document.getElementById("talkjs-container"));
+				    var conversation = talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other))
+				    conversation.setParticipant(me);
+				    conversation.setParticipant(other);
+
+				    var inbox = talkSession.createInbox({selected: conversation});
+				    inbox.mount(document.getElementById("talkjs-container"));
+				});
+			});
+		}
+	});
 });
