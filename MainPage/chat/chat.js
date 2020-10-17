@@ -32,7 +32,7 @@ Talk.ready.then(function() {
 				    conversation.setParticipant(me);
 				    conversation.setParticipant(other);
 
-				    var inbox = talkSession.createInbox({selected: conversation});
+				    var inbox = talkSession.createChatbox(conversation);
 				    inbox.mount(document.getElementById("talkjs-container"));
 				});
 			});
