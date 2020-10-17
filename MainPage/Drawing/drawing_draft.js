@@ -23,10 +23,15 @@ function init() {
         findxy('down', e)
     }, false);
     canvas.addEventListener("mouseup", function (e) {
+        
         findxy('up', e)
+        // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
+        firebase_arr = [];
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
+        // SEND ARRAY TO FIREBASE HERE -------------------------------------
+        firebase_arr = [];
     }, false);
 }
     
@@ -89,6 +94,9 @@ function findxy(res, e) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
             console.log(firebase_arr[firebase_arr.length - 1])
+
+            // SEND ARRAY TO FIREBASE -------------------------------------
+            firebase_arr = []
             update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
             ctx.fillStyle = x;
