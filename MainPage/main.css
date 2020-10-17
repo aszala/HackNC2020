@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template-rows: 5vh 95vh;
+    grid-template-rows: 3rem calc(100vh - 3rem);
     grid-template-columns: 4vw 16vw 50vw 30vw;
 }
 
