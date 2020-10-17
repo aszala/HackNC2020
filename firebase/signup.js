@@ -23,6 +23,13 @@ function createUser(email, password) {
 	} else {
 		auth.createUserWithEmailAndPassword(email, password).then((cred) => {
 			auth.currentUser.sendEmailVerification().then(() => {
+				db.collection("users").doc(auth.currentUser.uid).set({
+					uid: auth.currentUser.uid,
+					email: email,
+					profilePic: 'default.png',
+					tags: []
+				});
+
 				auth.signOut().then(() => {
 					console.log("sent");
 					document.location.replace('/login.html');

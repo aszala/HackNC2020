@@ -1,4 +1,4 @@
-const loginForm = docunebt.querySelector("#login-form");
+const loginForm = document.querySelector("#login-form");
 
 loginForm.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -31,7 +31,7 @@ function login(email, password, state) {
 auth.onAuthStateChanged((user) => {
 	if (user) {
 		if (!userSignedIn) {
-			document.location.replace('/MainPage/home.html');
+			document.location.replace('/MainPage/main.html');
 			console.log("User signed in");
 		} else {
 			if(!user.emailVerified) {
