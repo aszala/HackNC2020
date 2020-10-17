@@ -3,8 +3,6 @@ var update_counter = 0;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-otherUser = 1;              // GET THE USER USER ID AND PUT INTO HERE
-currUser = 0;               // GET THE CURRENT/THIS USER ID AND PUT INTO HERE
 var initDate = new Date() // update board after a certain time interval with % division
 
 var canvas, ctx, flag = false,
@@ -19,11 +17,12 @@ y = 2;
 // We prob need a timer to constantly store and update the other persons array
 otherBoard = []        //  <We should store the firebase thing here
 // sample drawing (1 STROKE MOUSE DOWN TO MOUSE UP)
-otherBoard = ["253,199,black,1602965201920"]
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
-// off.currentuser.UID <- this is current user
-
+// testing firebase
+thisCollection = "DrawingTest";
+thisPerson = "User2_Donkey";
+otherPerson = "User1_Shrek"
 
 function init() {
     canvas = document.getElementById('can');
@@ -33,7 +32,7 @@ function init() {
 
     canvas.addEventListener("mousemove", function (e) {
         var date = new Date();
-        if ((date.getTime() - initDate.getTime()) % 500 == 0) {
+        if ((date.getTime() - initDate.getTime()) % 300 == 0) {
             otherboard = getFromFirebase(otherUser);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
             updateDrawingBoard(otherBoard, currUser)        // UPDATE DRAWING BOARD
         }
