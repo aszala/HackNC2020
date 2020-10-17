@@ -1,0 +1,27 @@
+.orange-background {
+    background-color: orange;
+}
+
+.orange {
+    color: orange;
+}
+
+.grey-background {
+    background-color: darkgray;
+}
+
+.grey {
+    color: darkgray;
+}
+
+.white-background {
+    background-color: white;
+}
+
+.white-border {
+    border-color: white;
+}
+
+.white {
+    color: white;
+}

@@ -13,36 +13,38 @@ body {
     box-shadow: 0px 2px 2px grey;
 }
 
-.orange-background {
-    background-color: orange;
-}
-
-.orange {
-    color: orange;
-}
-
-.grey-background {
-    background-color: darkgray;
-}
-
-.grey {
-    color: darkgray;
-}
-
-.white-background {
-    background-color: white;
-}
-
-.white-border {
-    border-color: white;
-}
-
-.white {
-    color: white;
-}
-
 h1 {
     font-family: 'Raleway';
     opacity: 100%;
     font-size: 2rem;
+}
+
+h2 {
+    font-family: 'Raleway';
+    opacity: 100%;
+}
+
+.header {
+    padding: 0.5rem;
+}
+
+.aside {
+    grid-row: 2;
+    grid-column: 2;
+    padding: 1rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.aside-background {
+    grid-row: 2;
+    grid-column: 2;
+    border-radius: 0.5rem 0 0 0.5rem;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.aside-background img {
+    height: 100%;
+    filter: blur(1rem);
+    object-fit: fill;
 }
