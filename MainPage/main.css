@@ -19,7 +19,7 @@ body {
     grid-row: 2;
     grid-column: 3;
     padding: 1rem;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .pear-holder {

@@ -24,7 +24,15 @@ auth.onAuthStateChanged((user) => {
 					let friendData = docFriend.data();
 
 					storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
-						let elements = "<div class='active-chat'><div class='chat-profilePic-container'><img class='chat-profilePic' src=" + url + " ></div><div class='chat-name-container'><div class='chat-name'>" + friendData.name + "</div></div></div>";
+						let elements = `
+						<div class='active-chat'>
+							<div class='chat-profilePic-container'>
+								<img class='chat-profilePic' src=${url} >
+							</div>
+							<div class='chat-name-container'>
+								<p class='chat-name'>${friendData.name}</p>
+							</div>
+						</div>`;
 						$("#chat-list").append(elements);
 					});
 				});
@@ -35,7 +43,15 @@ auth.onAuthStateChanged((user) => {
 					let dataOther = docOther.data();
 
 					storage.ref(dataOther.profilePic).getDownloadURL().then((url) => {
-						let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + dataOther.name + "</div><div class='connect-button' onclick='makePeer('" + dataOther.uid + "')'>Make Peer</div></div></div>";
+						let elements = `
+						<div class='search-result'>
+							<div class='search-result-profilePic-container'>
+								<img class='search-result-profilePic' src="${url}" >
+							</div><div class='search-result-name-container'>
+							<div class='search-result-name'>${dataOther.name}</div>
+								<button class='connect-button' onclick='makePeer('"${dataOther.uid}"')'>Make Peer</button>
+							</div>
+						</div>`;
 						$("#similar-tags").append(elements);
 					});
 				});
