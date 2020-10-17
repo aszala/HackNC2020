@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<form id="login-form">
+			<input type="email" id="email" class="textfield" placeholder="Email" autocomplete="email" name="email" required/><br><br>
+			<input type="password" id="password" class="textfield" placeholder="Password" autocomplete="current-password" name="password" required/><br><br>
+			<br>
+			<input type="submit" class="button" value="Login"/>
+			<br>
+			<div id="login-error"></div>
+			<br>
+			<input type="checkbox" name="remember"><label for="remember">Keep me signed in</label>
+		</form>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+		<script src="firebase/config.js"></script>
+		<script src="firebase/login.js"></script>
+	</body>
+</html>
