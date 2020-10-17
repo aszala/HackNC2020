@@ -1,4 +1,5 @@
 var firebase_arr = [];
+var update_counter = 0;
 var canvas, ctx, flag = false,
         prevX = 0,
         currX = 0,
@@ -49,12 +50,12 @@ function color(obj) {
         case "black":
             x = "black";
             break;
-        case "white":
-            x = "white";
-            break;
+        // case "white":
+        //     x = "white";
+        //     break;
     }
-    if (x == "white") y = 14;
-    else y = 2;
+    // if (x == "white") y = 14;
+    // else y = 2;
 
 }
     
@@ -71,6 +72,8 @@ function draw() {
 function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
+    firebase_arr = []
+    console.log("firebase_arr len: " + firebase_arr.length)
 }
 
 function findxy(res, e) {
@@ -83,8 +86,12 @@ function findxy(res, e) {
         flag = true;
         dot_flag = true;
         if (dot_flag) {
-            firebase_arr[firebase_arr.length] = currX + "," + currY + "," + x
-            console.log(firebase_arr[firebase_arr.length - 1])
+            if (update_counter % 3 == 0) {
+                firebase_arr.push(currX + "," + currY + "," + x)
+                console.log(firebase_arr[firebase_arr.length - 1])
+                
+            }
+            update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
             ctx.fillStyle = x;
             ctx.fillRect(currX, currY, 2, 2);
@@ -101,8 +108,11 @@ function findxy(res, e) {
             prevY = currY;
             currX = e.clientX - canvas.offsetLeft;
             currY = e.clientY - canvas.offsetTop;
-            firebase_arr[firebase_arr.length] = currX + "," + currY + "," + x
-            console.log(firebase_arr[firebase_arr.length - 1])
+            if (update_counter % 3 == 0) {
+                firebase_arr.push(currX + "," + currY + "," + x)
+                console.log(firebase_arr[firebase_arr.length - 1])
+            }
+            update_counter = (update_counter + 1 % 3)
             draw();
         }
     }
