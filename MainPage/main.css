@@ -15,30 +15,10 @@ body {
     grid-column: 1;
 }
 
-.aside {
-    grid-row: 2;
-    grid-column: 2;
-    padding: 1rem;
-    border-radius: 0.5rem 0 0 0.5rem;
-}
-
-.aside-background {
-    grid-row: 2;
-    grid-column: 2;
-    border-radius: 0.5rem 0 0 0.5rem;
-    overflow: hidden;
-    z-index: -1;
-}
-
-.aside-background img {
-    height: 100%;
-    filter: blur(1rem);
-    object-fit: fill;
-}
-
 .main {
     grid-row: 2;
     grid-column: 3;
+    padding: 1rem;
 }
 
 .nav ul {
@@ -57,4 +37,13 @@ body {
     width: 3vw;
     margin: 0.5vw;
     border-radius: 100%;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+.nav li a:hover {
+    color: white;
+    background-color: black;
+    border-style: none;
 }

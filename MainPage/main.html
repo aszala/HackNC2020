@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-	<head>
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <title>HackNC 2020</title>
-		<!-- <link rel="shortcut icon" href="favicon.ico" /> -->
-		<link rel="stylesheet" href="../styles.css">
-		<link rel="stylesheet" href="main.css">
-		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HackNC 2020</title>
+	<!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="../colors.css">
+	<link rel="stylesheet" href="main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+</head>
 
-	<body class="white-background">
-		<header class='header elevated white-background'>
-			header
-		</header>
-		<nav class='nav'>
-			<ul>
-				<li>
-					<a class='orange-background'>1</a>
-				</li>
-				<li>
-					<a class='orange-background'>2</a>
-				</li>
-				<li>
-					<a class='orange-background'>3</a>
-				</li>
-				<li>
-					<a class='orange-background'>4</a>
-				</li>
-			</ul>
-		</nav>
-		<aside class='aside'>
-			<h1 class='white'>Chats</h1>
-			<hr class='white white-border'/>
-			<div class='chat-list'></div>
-		</aside>
-		<div class='aside-background'><img src="../assets/orangeblue.jpg" alt=""></div>
-        <main class='main white-background'>
-            main
-        </main>
-	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-	        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-	</body>
+<body class="white-background">
+	<header class='header elevated white-background'>
+		<h2>HackNC 2020</h2>
+	</header>
+	<nav class='nav'>
+		<ul>
+			<li>
+				<a>
+					+
+				</a>
+			</li>
+			<li>
+				<a>
+					+
+				</a>
+			</li>
+			<li>
+				<a>
+					+
+				</a>
+			</li>
+			<li>
+				<a>
+					+
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<aside class='aside'>
+		<h1 class='white'>Ongoing Chats</h1>
+		<hr class='white white-border' />
+		<div class='chat-list'></div>
+	</aside>
+	<div class='aside-background'><img src="../assets/orangeblue.jpg" alt=""></div>
+	<main class='main white-background'>
+		<div class='main-title'>
+			<h1>Search</h1>
+			<hr />
+		</div>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+	<script src="firebase/config.js"></script>
+	<script src="firebase/login.js"></script>
+	<script src="firebase/validate_login.js"></script>
+</body>
 
 </html>
