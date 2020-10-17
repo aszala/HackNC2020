@@ -86,11 +86,8 @@ function findxy(res, e) {
         flag = true;
         dot_flag = true;
         if (dot_flag) {
-            if (update_counter % 3 == 0) {
-                firebase_arr.push(currX + "," + currY + "," + x)
-                console.log(firebase_arr[firebase_arr.length - 1])
-                
-            }
+            firebase_arr.push(currX + "," + currY + "," + x)
+            console.log(firebase_arr[firebase_arr.length - 1])
             update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
             ctx.fillStyle = x;
