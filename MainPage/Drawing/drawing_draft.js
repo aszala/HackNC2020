@@ -1,6 +1,6 @@
 var firebase_arr = []; 
-var firebase_arr_slow = [] 
 var update_counter = 0;
+var storeToFirebaseCounter = 0;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -20,7 +20,7 @@ otherBoard = []        //  <We should store the firebase thing here
 // sample drawing (1 STROKE MOUSE DOWN TO MOUSE UP)
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
-var thisCollection = "Drawing_Test";
+var thisCollection = "Drawing";  // I don't think this needs to change, since we store all users drawings in here
 var thisPerson = "User2";
 var otherPerson = "User1"
 
@@ -80,12 +80,8 @@ function color(obj) {
         case "black":
             x = "black";
             break;
-        // case "white":
-        //     x = "white";
-        //     break;
     }
-    // if (x == "white") y = 14;
-    // else y = 2;
+
 
 }
     
@@ -98,12 +94,18 @@ function draw() {
     ctx.stroke();
     ctx.closePath();
 }
-// "x,y,green"
+
 function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
     firebase_arr = []
-    // console.log("firebase_arr len: " + firebase_arr.length)
+    db.collection(thisCollection).doc(thisPerson).update({
+        drawing: []
+    })
+    db.collection(thisCollection).doc(otherPerson).update({
+        drawing: []
+    })
+
 }
 
 function findxy(res, e) {
@@ -118,12 +120,9 @@ function findxy(res, e) {
         if (dot_flag) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-            // console.log(firebase_arr[firebase_arr.length - 1])
-            // SEND ARRAY TO FIREBASE -------------------------------------
-            firebase_arr.push("newline")
             storeToFirebase(firebase_arr, thisPerson);
             firebase_arr = []
-            update_counter = (update_counter + 1 % 2)
+            update_counter = (update_counter + 1 % 5)
             ctx.beginPath();
             ctx.fillStyle = x;
             ctx.fillRect(currX, currY, 2, 2);
@@ -143,10 +142,9 @@ function findxy(res, e) {
             if (update_counter % 5 == 0) {
                 var d = new Date();
                 firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-                firebase_arr.push("newline")
                 // console.log(firebase_arr)
             }
-            update_counter = (update_counter + 1 % 2)
+            update_counter = (update_counter + 1 % 5)
             draw();
         }
     }
@@ -157,7 +155,6 @@ function save() {
     var dataURL = canvas.toDataURL();
     document.getElementById("canvasimg").src = dataURL;
     console.log(document.getElementById("canvasimg").src)
-
     document.getElementById("canvasimg").style.display = "inline";
 }
 
@@ -176,7 +173,7 @@ function updateDrawingBoard(board) {
         var tempYc = tempSplitArrc[1]
         var tempColorc = tempSplitArrc[2]
         var tempTimec = tempSplitArrc[3]  
-        if (board[i] == "newline") {
+        if (board[i].includes("newline")) {
             ctx.beginPath();
             ctx.fillStyle = tempColorc;
             ctx.fillRect(tempXc, tempYc, 2, 2);
@@ -219,13 +216,15 @@ function updateDraw(pX, pY, cX, cY, cColor) {
 
 function storeToFirebase(thisArray, ThisUser) {
     // Store thisArray to firebase into ThisUser
-    
     for (var i = 0; i < thisArray.length; i++) {
         db.collection(thisCollection).doc(ThisUser).update({
             drawing: firebase.firestore.FieldValue.arrayUnion(thisArray[i])
         })
     }
-    console.log("storeToFirebase");
+    db.collection(thisCollection).doc(ThisUser).update({
+        drawing: firebase.firestore.FieldValue.arrayUnion('newline' + storeToFirebaseCounter)
+    })
+    storeToFirebaseCounter++;
 }
 
 function getFromFirebase(OtherUser) {
@@ -239,11 +238,5 @@ function getFromFirebase(OtherUser) {
             drawing: []
         })
     }
-
-    console.log("getFromFirebase");
 }
 
-// db.collection(thisCollection).doc(otherPerson).get().then(function (doc) {
-//     console.log(doc.data())
-//     otherBoard = doc.data().Shrek_Drawing;
-// })
