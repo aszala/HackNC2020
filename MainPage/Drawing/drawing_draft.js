@@ -86,7 +86,8 @@ function findxy(res, e) {
         flag = true;
         dot_flag = true;
         if (dot_flag) {
-            firebase_arr.push(currX + "," + currY + "," + x)
+            var d = new Date();
+            firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
             console.log(firebase_arr[firebase_arr.length - 1])
             update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
@@ -106,7 +107,8 @@ function findxy(res, e) {
             currX = e.clientX - canvas.offsetLeft;
             currY = e.clientY - canvas.offsetTop;
             if (update_counter % 3 == 0) {
-                firebase_arr.push(currX + "," + currY + "," + x)
+                var d = new Date();
+                firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
                 console.log(firebase_arr[firebase_arr.length - 1])
             }
             update_counter = (update_counter + 1 % 3)
@@ -123,3 +125,6 @@ function save() {
 
     document.getElementById("canvasimg").style.display = "inline";
 }
+
+
+// TAKE IN THE OTHER PERSONS ARRAY AND CREATE A NEW DRAWING OR UPDATE THE CANVAS CANVAS
