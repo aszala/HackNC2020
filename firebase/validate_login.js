@@ -1,6 +1,6 @@
 auth.onAuthStateChanged((user) => {
 	if (!user) {
-		document.location.replace("login.html");
+		document.location.replace("/login.html");
 	} else {
 		if (!user.emailVerified) {
 			logOut();
@@ -10,7 +10,7 @@ auth.onAuthStateChanged((user) => {
 
 function logOut() {
 	auth.signOut().then(function() {
-		document.location.replace("login.html");
+		document.location.replace("/login.html");
 	}).catch((error) => {
 		console.err("User could not be signed out.");
 	});

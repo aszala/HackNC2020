@@ -31,7 +31,7 @@ function login(email, password, state) {
 auth.onAuthStateChanged((user) => {
 	if (user) {
 		if (!userSignedIn) {
-			document.location.replace('home.html');
+			document.location.replace('/MainPage/home.html');
 			console.log("User signed in");
 		} else {
 			if(!user.emailVerified) {

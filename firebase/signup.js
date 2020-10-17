@@ -25,7 +25,7 @@ function createUser(email, password) {
 			auth.currentUser.sendEmailVerification().then(() => {
 				auth.signOut().then(() => {
 					console.log("sent");
-					document.location.replace('login.html');
+					document.location.replace('/login.html');
 				});
 			});
 
