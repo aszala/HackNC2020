@@ -3,3 +3,46 @@
     padding: 0;
     margin: 0;
 }
+
+body {
+    background-color: white;
+}
+
+.elevated {
+    z-index: 1;
+    box-shadow: 0px 2px 2px grey;
+}
+
+.orange-background {
+    background-color: orange;
+}
+
+.orange {
+    color: orange;
+}
+
+.grey-background {
+    background-color: darkgray;
+}
+
+.grey {
+    color: darkgray;
+}
+
+.white-background {
+    background-color: white;
+}
+
+.white-border {
+    border-color: white;
+}
+
+.white {
+    color: white;
+}
+
+h1 {
+    font-family: 'Raleway';
+    opacity: 100%;
+    font-size: 2rem;
+}
