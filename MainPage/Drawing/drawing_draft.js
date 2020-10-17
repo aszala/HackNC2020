@@ -1,4 +1,5 @@
-var firebase_arr = [];
+var firebase_arr = []; 
+var firebase_arr_slow = [] 
 var update_counter = 0;
 
 const queryString = window.location.search;
@@ -19,10 +20,9 @@ otherBoard = []        //  <We should store the firebase thing here
 // sample drawing (1 STROKE MOUSE DOWN TO MOUSE UP)
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
-// testing firebase
-thisCollection = "DrawingTest";
-thisPerson = "User2_Donkey";
-otherPerson = "User1_Shrek"
+var thisCollection = "Drawing_Test";
+var thisPerson = "User2";
+var otherPerson = "User1"
 
 function init() {
     canvas = document.getElementById('can');
@@ -32,9 +32,8 @@ function init() {
 
     canvas.addEventListener("mousemove", function (e) {
         var date = new Date();
-        if ((date.getTime() - initDate.getTime()) % 300 == 0) {
-            otherboard = getFromFirebase(otherUser);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
-            updateDrawingBoard(otherBoard, currUser)        // UPDATE DRAWING BOARD
+        if ((date.getTime() - initDate.getTime()) % 500 == 0) {
+            getFromFirebase(otherPerson);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
         }
         findxy('move', e)
     }, false);
@@ -45,15 +44,16 @@ function init() {
         findxy('up', e)
         if (firebase_arr.length > 0) {
             // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
-            storeToFirebase(firebase_arr);
+            storeToFirebase(firebase_arr, thisPerson);
             firebase_arr = [];
         }
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
+        
         // SEND ARRAY TO FIREBASE HERE -------------------------------------
         if (firebase_arr.length > 0) {
-            storeToFirebase(firebase_arr, currUser);;
+            storeToFirebase(firebase_arr, thisPerson);
             firebase_arr = [];
         } 
     }, false);
@@ -120,9 +120,10 @@ function findxy(res, e) {
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
             // console.log(firebase_arr[firebase_arr.length - 1])
             // SEND ARRAY TO FIREBASE -------------------------------------
-            storeToFirebase(firebase_arr, currUser);
+            firebase_arr.push("newline")
+            storeToFirebase(firebase_arr, thisPerson);
             firebase_arr = []
-            update_counter = (update_counter + 1 % 3)
+            update_counter = (update_counter + 1 % 2)
             ctx.beginPath();
             ctx.fillStyle = x;
             ctx.fillRect(currX, currY, 2, 2);
@@ -139,12 +140,13 @@ function findxy(res, e) {
             prevY = currY;
             currX = e.clientX - canvas.offsetLeft;
             currY = e.clientY - canvas.offsetTop;
-            if (update_counter % 3 == 0) {
+            if (update_counter % 5 == 0) {
                 var d = new Date();
                 firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
+                firebase_arr.push("newline")
                 // console.log(firebase_arr)
             }
-            update_counter = (update_counter + 1 % 3)
+            update_counter = (update_counter + 1 % 2)
             draw();
         }
     }
@@ -164,14 +166,22 @@ var tempXp = 0;
 var tempYp = 0;
 var tempColorp = "black";
 var tempTimep = 0;
+var DoneLoading = false;
 
 function updateDrawingBoard(board) {
+    DoneLoading = false
     for (var i = 0; i < board.length - 1; i++) {
         var tempSplitArrc = board[i].split(',')
         var tempXc = tempSplitArrc[0]
         var tempYc = tempSplitArrc[1]
         var tempColorc = tempSplitArrc[2]
-        var tempTimec = tempSplitArrc[3]    
+        var tempTimec = tempSplitArrc[3]  
+        if (board[i] == "newline") {
+            ctx.beginPath();
+            ctx.fillStyle = tempColorc;
+            ctx.fillRect(tempXc, tempYc, 2, 2);
+            ctx.closePath();
+        }
         if (i != 0) {
             updateDraw(tempXp, tempYp, tempXc, tempYc, tempColorc)
         }
@@ -192,6 +202,7 @@ function updateDrawingBoard(board) {
         ctx.fillRect(tempXc, tempYc, 2, 2);
         ctx.closePath();
     }
+    DoneLoading = true;
 
 }
 
@@ -208,10 +219,31 @@ function updateDraw(pX, pY, cX, cY, cColor) {
 
 function storeToFirebase(thisArray, ThisUser) {
     // Store thisArray to firebase into ThisUser
+    
+    for (var i = 0; i < thisArray.length; i++) {
+        db.collection(thisCollection).doc(ThisUser).update({
+            drawing: firebase.firestore.FieldValue.arrayUnion(thisArray[i])
+        })
+    }
     console.log("storeToFirebase");
 }
 
-function getFromFirebase(thisArray, ThisUser) {
+function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
+    db.collection(thisCollection).doc(OtherUser).get().then(function(doc) {
+        otherBoard = doc.data().drawing;
+        updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
+    })
+    if (DoneLoading) {
+        db.collection(thisCollection).doc(OtherUser).set({
+            drawing: []
+        })
+    }
+
     console.log("getFromFirebase");
 }
+
+// db.collection(thisCollection).doc(otherPerson).get().then(function (doc) {
+//     console.log(doc.data())
+//     otherBoard = doc.data().Shrek_Drawing;
+// })
