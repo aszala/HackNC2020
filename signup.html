@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Signup</title>
+	</head>
+	<body>
+		<form id="signup-form">
+			<input type="email" id="email" placeholder="Email" autocomplete="email" name="email" required/><br><br>
+			<input type="password" id="password" placeholder="Password" autocomplete="new-password" name="password" required/><br><br>
+			<input type="password" id="confirm-password" placeholder="Confirm Password" autocomplete="new-password" name="confirm-password" required/><br><br>
+			<br>
+			<input type="submit" class="button" value="Signup"/>
+			<br>
+			<div id="signup-error"></div>
+			<br>
+		</form>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+		<script src="firebase/config.js"></script>
+		<script src="firebase/singup.js"></script>
+	</body>
+</html>
