@@ -1,5 +1,12 @@
 var firebase_arr = [];
 var update_counter = 0;
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+otherUser = 1;              // GET THE USER USER ID AND PUT INTO HERE
+currUser = 0;               // GET THE CURRENT/THIS USER ID AND PUT INTO HERE
+var initDate = new Date() // update board after a certain time interval with % division
+
 var canvas, ctx, flag = false,
         prevX = 0,
         currX = 0,
@@ -15,7 +22,9 @@ otherBoard = []        //  <We should store the firebase thing here
 otherBoard = ["253,199,black,1602965201920"]
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
-    
+// off.currentuser.UID <- this is current user
+
+
 function init() {
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
@@ -23,22 +32,31 @@ function init() {
     h = canvas.height;
 
     canvas.addEventListener("mousemove", function (e) {
-        updateDrawingBoard(otherBoard)
+        var date = new Date();
+        if ((date.getTime() - initDate.getTime()) % 500 == 0) {
+            otherboard = getFromFirebase(otherUser);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
+            updateDrawingBoard(otherBoard, currUser)        // UPDATE DRAWING BOARD
+        }
         findxy('move', e)
     }, false);
     canvas.addEventListener("mousedown", function (e) {
         findxy('down', e)
     }, false);
     canvas.addEventListener("mouseup", function (e) {
-        
         findxy('up', e)
-        // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
-        firebase_arr = [];
+        if (firebase_arr.length > 0) {
+            // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
+            storeToFirebase(firebase_arr);
+            firebase_arr = [];
+        }
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
         // SEND ARRAY TO FIREBASE HERE -------------------------------------
-        firebase_arr = [];
+        if (firebase_arr.length > 0) {
+            storeToFirebase(firebase_arr, currUser);;
+            firebase_arr = [];
+        } 
     }, false);
     
 }
@@ -86,7 +104,7 @@ function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
     firebase_arr = []
-    console.log("firebase_arr len: " + firebase_arr.length)
+    // console.log("firebase_arr len: " + firebase_arr.length)
 }
 
 function findxy(res, e) {
@@ -101,9 +119,9 @@ function findxy(res, e) {
         if (dot_flag) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-            console.log(firebase_arr[firebase_arr.length - 1])
-
+            // console.log(firebase_arr[firebase_arr.length - 1])
             // SEND ARRAY TO FIREBASE -------------------------------------
+            storeToFirebase(firebase_arr, currUser);
             firebase_arr = []
             update_counter = (update_counter + 1 % 3)
             ctx.beginPath();
@@ -125,7 +143,7 @@ function findxy(res, e) {
             if (update_counter % 3 == 0) {
                 var d = new Date();
                 firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-                console.log(firebase_arr)
+                // console.log(firebase_arr)
             }
             update_counter = (update_counter + 1 % 3)
             draw();
@@ -142,8 +160,6 @@ function save() {
     document.getElementById("canvasimg").style.display = "inline";
 }
 
-
-// TAKE IN THE OTHER PERSONS ARRAY AND CREATE A NEW DRAWING OR UPDATE THE CANVAS CANVAS
 
 var tempXp = 0;
 var tempYp = 0;
@@ -191,3 +207,12 @@ function updateDraw(pX, pY, cX, cY, cColor) {
 }
 
 
+function storeToFirebase(thisArray, ThisUser) {
+    // Store thisArray to firebase into ThisUser
+    console.log("storeToFirebase");
+}
+
+function getFromFirebase(thisArray, ThisUser) {
+    // get thisArray from thisUser's account on firebase and return it
+    console.log("getFromFirebase");
+}
