@@ -11,7 +11,7 @@ body {
 
 .elevated {
     z-index: 1;
-    box-shadow: 0px 2px 2px grey;
+    box-shadow: 0px 2px 2px black;
 }
 
 h1 {
