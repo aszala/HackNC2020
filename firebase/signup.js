@@ -27,7 +27,8 @@ function createUser(email, password) {
 					uid: auth.currentUser.uid,
 					email: email,
 					profilePic: 'default.png',
-					tags: []
+					tags: [],
+					friends: []
 				}).then(() => {
 					auth.signOut().then(() => {
 						console.log("sent");
