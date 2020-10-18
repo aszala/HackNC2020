@@ -27,48 +27,48 @@ var thisPersonDocName;
 var otherPersonDocName;
 
 // TESTING
-// thisPerson = "User2"
-// otherPerson = "User1"
-// thisPersonDocName = thisPerson + "TO" + otherPerson;
-// otherPersonDocName = otherPerson + "TO" + thisPerson;
+thisPerson = "User2"
+otherPerson = "User1"
+thisPersonDocName = thisPerson + "TO" + otherPerson;
+otherPersonDocName = otherPerson + "TO" + thisPerson;
 
-// db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
-//     if (!docSnapshot.exists) {
-//         db.collection(thisCollection).doc(thisPersonDocName).set({
-//             drawing: []
-//         })
-//         db.collection(thisCollection).doc(otherPersonDocName).set({
-//             drawing: []
-//         })
-//     }
-// });  
+db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+    if (!docSnapshot.exists) {
+        db.collection(thisCollection).doc(thisPersonDocName).set({
+            drawing: []
+        })
+        db.collection(thisCollection).doc(otherPersonDocName).set({
+            drawing: []
+        })
+    }
+});  
 
 
 let idsSaved = true;
 
 // get the individual user ID's
-auth.onAuthStateChanged((user) => {
-	if (user) {
-		thisPerson = auth.currentUser.uid;
-		otherPerson = urlParams.get("id");
-		thisPersonDocName = thisPerson + "TO" + otherPerson;
-		otherPersonDocName = otherPerson + "TO" + thisPerson;
-        // initilaizes the unique document/drawing log if they do not already exist
-        db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
-            if (!docSnapshot.exists) {
-                db.collection(thisCollection).doc(thisPersonDocName).set({
-                    drawing: []
-                })
-                db.collection(thisCollection).doc(otherPersonDocName).set({
-                    drawing: []
-                })
-        }
-        });  
-        idsSaved = true;
-	} else {
-		document.location.replace("/login.html");
-	}
-});
+// auth.onAuthStateChanged((user) => {
+// 	if (user) {
+// 		thisPerson = auth.currentUser.uid;
+// 		otherPerson = urlParams.get("id");
+// 		thisPersonDocName = thisPerson + "TO" + otherPerson;
+// 		otherPersonDocName = otherPerson + "TO" + thisPerson;
+//         // initilaizes the unique document/drawing log if they do not already exist
+//         db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+//             if (!docSnapshot.exists) {
+//                 db.collection(thisCollection).doc(thisPersonDocName).set({
+//                     drawing: []
+//                 })
+//                 db.collection(thisCollection).doc(otherPersonDocName).set({
+//                     drawing: []
+//                 })
+//         }
+//         });  
+//         idsSaved = true;
+// 	} else {
+// 		document.location.replace("/login.html");
+// 	}
+// });
 
 
 
@@ -77,14 +77,14 @@ function init() {
     ctx = canvas.getContext("2d");
     w = canvas.width;
     h = canvas.height;
-
+      
     canvas.addEventListener("mousemove", function (e) {
         if (idsSaved) {
+            findxy('move', e)
             var date = new Date();
             if ((date.getTime() - initDate.getTime()) % 500 == 0) {
                 getFromFirebase(otherPersonDocName);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
             }
-            findxy('move', e)
         }
     }, false);
     canvas.addEventListener("mousedown", function (e) {
@@ -99,13 +99,14 @@ function init() {
                 // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
                 storeToFirebase(firebase_arr, thisPersonDocName);
                 firebase_arr = [];
+                getFromFirebase(otherPersonDocName); 
             }
         }    
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         if (idsSaved) {
             findxy('out', e)
-
+            getFromFirebase(otherPersonDocName); 
             // SEND ARRAY TO FIREBASE HERE -------------------------------------
             if (firebase_arr.length > 0) {
                 storeToFirebase(firebase_arr, thisPersonDocName);
