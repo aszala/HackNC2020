@@ -50,7 +50,7 @@ var otherPersonClear;
 // });  
 
 
-let idsSaved = true;
+let idsSaved = false;
 
 // get the individual user ID's
 auth.onAuthStateChanged((user) => {
@@ -298,33 +298,12 @@ function storeToFirebase(thisArray, ThisUser) {
 
 function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
-    var isCleared;
-    db.collection(thisCollection).doc(otherPersonClear).get().then(function (doc) {
-        isCleared = doc.data().clear == "True";  
+    db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
+        otherBoard = doc.data().drawing;
+        updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
+        db.collection(thisCollection).doc(otherPersonDocName).set({
+            drawing: []
+        })
     })
-
-    if (isCleared) {
-        ctx.clearRect(0, 0, w, h);
-        document.getElementById("canvasimg").style.display = "none";
-        db.collection(thisCollection).doc(otherPersonClear).set({
-            clear: "False"
-        })
-        db.collection(thisCollection).doc(thisPersonClear).set({
-            clear: "False"
-        })
-    } else {
-        db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
-            otherBoard = doc.data().drawing;
-            if (otherBoard.length == 0 && firebase_arr.length > 0) {
-                ctx.clearRect(0, 0, w, h);
-                document.getElementById("canvasimg").style.display = "none";
-                firebase_arr = []
-            } else {
-                updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
-                db.collection(thisCollection).doc(otherPersonDocName).set({
-                    drawing: []
-                })
-            }
-        })
-    }
+    
 }
