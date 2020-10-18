@@ -1,18 +1,20 @@
 function search() {
 	let query = document.getElementById('search-box').value;
 	$("#search-results-name").html("");
-	db.collection("users").get().then((snap) => {
-		snap.forEach((doc) => {
-			let data = doc.data();
-			if (data.name.includes(query)) {
-				storage.ref(data.profilePic).getDownloadURL().then((url) => {
-					let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + data.name + "</div><div class='connect-button' onclick='makePeer('" + data.uid + "')'>Make Peer</div></div></div>";
-	
-					$("#search-results-name").append(elements);
-				});
-			}
+	if (query.trim().length >= 1) {
+		db.collection("users").get().then((snap) => {
+			snap.forEach((doc) => {
+				let data = doc.data();
+				if (data.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
+					storage.ref(data.profilePic).getDownloadURL().then((url) => {
+						let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + data.name + "</div><div class='connect-button' onclick='makePeer('" + data.uid + "')'>Make Peer</div></div></div>";
+		
+						$("#search-results-name").append(elements);
+					});
+				}
+			});
 		});
-	});
+	}
 }
 
 auth.onAuthStateChanged((user) => {
@@ -31,12 +33,16 @@ auth.onAuthStateChanged((user) => {
 						let elements = `
 						<a class="active-chat fade">
 							<img class='chat-profilePic' src=${url} >
-							<p class='chat-name'>${friendData.name}</p>
+							<h3 class='chat-name'>${friendData.name}</h3>
 						</a>`;
 						$("#chat-list").append(elements);
 					});
 				});
 			});
+
+			if (data.tags.length == 0) {
+				document.location.replace("profile.html");
+			}
 
 			db.collection("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
 				snap.forEach((docOther) => {
@@ -58,15 +64,15 @@ auth.onAuthStateChanged((user) => {
 					storage.ref(dataOther.profilePic).getDownloadURL().then((url) => {
 						let elements = `
 						<div class='search-result'>
-							<div class='search-result-profilePic-container'>
-								<img class='search-result-profilePic' src="${url}" >
-							</div><div class='search-result-name-container'>
-							<div class='search-result-name'>${dataOther.name}</div>
+							<img class='search-result-profilePic' src="${url}" >
+							<div class='search-result-data>
+								<div class='search-result-name'>${dataOther.name}</div>
+								<hr>
+								<p>
+									${commonTags}
+								</p>
 								<button class='connect-button' onclick='makePeer('${dataOther.uid}')'>Make Peer</button>
 							</div>
-							<p>
-								${commonTags}
-							</p>
 						</div>`;
 						$("#similar-tags").append(elements);
 					});
