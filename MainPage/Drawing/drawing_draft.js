@@ -26,10 +26,11 @@ var otherPerson;
 var thisPersonDocName;
 var otherPersonDocName;
 
-thisPerson = "User2"
-otherPerson = "User1"
-thisPersonDocName = thisPerson + "TO" + otherPerson;
-otherPersonDocName = otherPerson + "TO" + thisPerson;
+// TESTING
+// thisPerson = "User2"
+// otherPerson = "User1"
+// thisPersonDocName = thisPerson + "TO" + otherPerson;
+// otherPersonDocName = otherPerson + "TO" + thisPerson;
 
 let idsSaved = false;
 
