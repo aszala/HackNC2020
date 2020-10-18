@@ -3,6 +3,8 @@ const loginForm = document.querySelector("#login-form");
 loginForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 
+	$("#login-error").css("display", "none");
+
 	const email = loginForm['email'].value;
 	const password = loginForm['password'].value;
 	const remember = loginForm['remember'].checked;
@@ -23,6 +25,7 @@ function login(email, password, state) {
 		auth.signInWithEmailAndPassword(email, password).then((cred) => {
 			userSignedIn = true;
 		}).catch(err => {
+			$("#login-error").css("display", "block");
 			$("#login-error").html(err.message);
 		});
 	});
@@ -35,6 +38,7 @@ auth.onAuthStateChanged((user) => {
 			console.log("User signed in");
 		} else {
 			if(!user.emailVerified) {
+				$("#login-error").css("display", "block");
 				$("#login-error").html("Your email has not been verified. Please click <span onclick='sendEmail();' style='text-decoration:underline;cursor:pointer;'>here</span> if you would like another verification email.");
 			} else {
 				document.location.replace('MainPage/main.html');

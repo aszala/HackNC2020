@@ -13,7 +13,7 @@
 	margin-bottom: 20px;
 }
 
-.signup-error {
+#signup-error {
 	color: red;
 	font-size: 20px;
 	background-color: rgba(0, 0, 0, 0.5);
