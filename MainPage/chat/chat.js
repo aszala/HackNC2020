@@ -49,7 +49,7 @@ Talk.ready.then(function () {
 
 						storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
 							let elements = `
-							<a class="active-chat fade" href=chat/chat.html?id=${friendData.uid}>
+							<a class="active-chat fade" href=chat.html?id=${friendData.uid}>
 								<img class='chat-profilePic' src=${url} >
 								<h3 class='chat-name'>${friendData.name}</h3>
 							</a>`;
