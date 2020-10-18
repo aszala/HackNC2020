@@ -9,11 +9,11 @@ function search() {
 					if (data.name && data.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
 						storage.ref(data.profilePic).getDownloadURL().then((url) => {
 							let elements = `
-							<div class='search-result secondary-background fade'>
+							<div class='search-result secondary-background fade' id="${dataOther.uid}">
 								<img class='search-result-profilePic' src="${url}" >
 								<div class='search-result-data white'>
 									<h3 class='search-result-name'>${data.name}</h3>
-									<button class='connect-button' onclick='makePeer('${data.uid}')'>Make Peer</button>
+									<button class='connect-button' onclick='makePeer("${data.uid}")'>Make Peer</button>
 								</div>
 							</div>`;
 
