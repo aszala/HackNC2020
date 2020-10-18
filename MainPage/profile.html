@@ -38,7 +38,7 @@
     </nav>
     <aside class='aside'>
         <img id='profile-pic' src="../assets/GenericProfile.png" alt="">
-        <h2 class="white">Hello!</h2>
+        <h2 id="hello-name" class="white">Hello!</h2>
     </aside>
     <div class='aside-background'><img src="../assets/orangeblue.jpg" alt=""></div>
     <main class='main white-background'>
@@ -46,14 +46,16 @@
         <hr />
         <form id='profile-form'>
             <div class='profile-form-fields'>
-                <label>First Name</label>
-                <input type="text">
-                <br>
-                <label>Last Name</label>
-                <input type="text">
-                <br>
-                <label>Interests (Chip)</label>
-                <input type="text">
+				<input id="profile-image-upload" type="file" name="filename" value="Upload a New Profile Picture">
+				<br><br>
+                <label>First Name</label><br>
+                <input id="first-name" name="first-name" type="text">
+                <br><br>
+                <label>Last Name</label><br>
+                <input id="last-name" name="last-name" type="text">
+                <br><br>
+                <div>Interests (comma seperated. i.e. "Dancing,Programming")</div>
+                <input id="tags" name="tags" type="text">
                 <br>
             </div>
             <input class="profile-submit" type='submit' value="Update">
@@ -67,8 +69,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-    <script src="firebase/config.js"></script>
-    <script src="firebase/login.js"></script>
+    <script src="../firebase/config.js"></script>
+	<script src="../firebase/profile_updater.js" charset="utf-8"></script>
     <script src="firebase/validate_login.js"></script>
 </body>
 
