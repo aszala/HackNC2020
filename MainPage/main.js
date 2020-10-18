@@ -1,10 +1,13 @@
-function search(query) {
+function search() {
+	let query = document.getElementById('search-box').value;
+	$("#search-results-name").html("");
 	db.collection("users").where("name", ">=", query).get().then((snap) => {
 		snap.forEach((doc) => {
 			let data = doc.data();
 
 			storage.ref(data.profilePic).getDownloadURL().then((url) => {
 				let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + data.name + "</div><div class='connect-button' onclick='makePeer('" + data.uid + "')'>Make Peer</div></div></div>";
+
 				$("#search-results-name").append(elements);
 			});
 		});
@@ -45,7 +48,7 @@ auth.onAuthStateChanged((user) => {
 								<img class='search-result-profilePic' src="${url}" >
 							</div><div class='search-result-name-container'>
 							<div class='search-result-name'>${dataOther.name}</div>
-								<button class='connect-button' onClick='makePeer('"${dataOther.uid}"')'>Make Peer</button>
+								<button class='connect-button' onclick='makePeer('"${dataOther.uid}"')'>Make Peer</button>
 							</div>
 						</div>`;
 						$("#similar-tags").append(elements);

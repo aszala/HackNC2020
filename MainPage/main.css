@@ -1,7 +1,7 @@
 body {
     display: grid;
     grid-template-rows: 3rem calc(100vh - 3rem);
-    grid-template-columns: 4vw 16vw 50vw 30vw;
+    grid-template-columns: 4vw 16vw 60vw 20vw;
 }
 
 .fade {
@@ -156,3 +156,4 @@ main input {
     width: 100%;
     text-align: center;
 }
+
