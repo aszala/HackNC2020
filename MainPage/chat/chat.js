@@ -65,7 +65,6 @@ Talk.ready.then(function () {
 		}
 	});
 
-	console.log(queryString)
 	$('main').append(
 		`<a class="action-button primary-background white fade" href='../Drawing/drawing.html${queryString}'><i class="fas fa-pen"></i></a>`
 	)

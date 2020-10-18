@@ -79,6 +79,7 @@ auth.onAuthStateChanged((user) => {
 function init() {
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth / 100 * 80 - 36;
     w = canvas.width;
     h = canvas.height;
 
