@@ -35,7 +35,7 @@ function makePeer(uid) {
 
 auth.onAuthStateChanged((user) => {
 	if (!user) {
-		document.location.replace("/login.html");
+		document.location.replace("../login.html");
 	} else {
 		db.collection("users").doc(auth.currentUser.uid).onSnapshot((doc) => {
 			let data = doc.data();
