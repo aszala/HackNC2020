@@ -28,3 +28,32 @@ h2 {
 .header {
     padding: 0.5rem;
 }
+
+.videoContainer {
+    position: relative;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    background-attachment: scroll;
+    overflow: hidden;
+}
+.videoContainer video {
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+    z-index: 1;
+    /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+    width: auto;
+    height: auto;
+}
+
+.videoContainer .overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background: black;
+    opacity: 0.75;
+}
