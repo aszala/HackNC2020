@@ -207,3 +207,15 @@ main input {
     color: black
 }
 
+#talkjs-container {
+    height: 100%;
+    width: 100%;
+}
+
+.message-panel {
+    width: 100%;
+}
+
+.center-stage {
+    max-width: 100vw !important
+}
