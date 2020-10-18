@@ -70,6 +70,7 @@ auth.onAuthStateChanged((user) => {
                 db.collection(thisCollection).doc(otherPersonDocName).set({
                     drawing: []
                 })
+
             }
         });
 
@@ -80,9 +81,20 @@ auth.onAuthStateChanged((user) => {
             db.collection(thisCollection).doc(otherPersonDocName).set({
                 clear: "False"
             })
-            
+           
         });
         idsSaved = true;
+
+        db.collection('users').doc(otherPerson).get().then(doc => {
+            let data = doc.data();
+            let name = data.name;
+
+            $('#hello-name')[0].innerText = `Drawing With: ${name}`
+            storage.ref(data.profilePic).getDownloadURL().then((url) => {
+                $("#profile-pic").attr("src", url);
+            });
+        });
+
     } else {
         document.location.replace("/login.html");
     }
@@ -305,5 +317,5 @@ function getFromFirebase(OtherUser) {
             drawing: []
         })
     })
-    
+
 }
