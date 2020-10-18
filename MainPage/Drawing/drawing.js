@@ -283,10 +283,16 @@ function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
     db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
         otherBoard = doc.data().drawing;
-        updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
-        db.collection(thisCollection).doc(otherPersonDocName).set({
-            drawing: []
-        })
+        if (otherBoard.length == 0) {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+            firebase_arr = []
+        } else {
+            updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
+            db.collection(thisCollection).doc(otherPersonDocName).set({
+                drawing: []
+            })
+        }
     })
     console.log("getFromFirebase")
 }
