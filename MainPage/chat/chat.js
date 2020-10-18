@@ -1,16 +1,15 @@
-// (function closure() {
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
 
-	Talk.ready.then(function () {
-		auth.onAuthStateChanged((user) => {
-			if (!user) {
-				document.location.replace("/login.html");
-			} else {
-				db.collection('users').doc(auth.currentUser.uid).get().then((doc) => {
-					db.collection('users').doc(urlParams.get('id')).get().then((otherDoc) => {
-						let userData = doc.data();
-						let otherData = otherDoc.data();
+Talk.ready.then(function () {
+	auth.onAuthStateChanged((user) => {
+		if (!user) {
+			document.location.replace("/login.html");
+		} else {
+			db.collection('users').doc(auth.currentUser.uid).get().then((doc) => {
+				db.collection('users').doc(urlParams.get('id')).get().then((otherDoc) => {
+					let userData = doc.data();
+					let otherData = otherDoc.data();
 
 						storage.ref(userData.profilePic).getDownloadURL().then((url) => {
 							storage.ref(otherData.profilePic).getDownloadURL().then((urlOther) => {
@@ -41,7 +40,7 @@
 						});
 					});
 				});
-			}
-		});
+			});
+		}
 	});
-// })()
+});
