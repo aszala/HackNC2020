@@ -32,7 +32,19 @@ var otherPersonDocName;
 // thisPersonDocName = thisPerson + "TO" + otherPerson;
 // otherPersonDocName = otherPerson + "TO" + thisPerson;
 
-let idsSaved = false;
+// db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+//     if (!docSnapshot.exists) {
+//         db.collection(thisCollection).doc(thisPersonDocName).set({
+//             drawing: []
+//         })
+//         db.collection(thisCollection).doc(otherPersonDocName).set({
+//             drawing: []
+//         })
+//     }
+// });  
+
+
+let idsSaved = true;
 
 // get the individual user ID's
 auth.onAuthStateChanged((user) => {
@@ -57,6 +69,8 @@ auth.onAuthStateChanged((user) => {
 		document.location.replace("/login.html");
 	}
 });
+
+
 
 function init() {
     canvas = document.getElementById('can');
@@ -205,10 +219,8 @@ var tempXp = 0;
 var tempYp = 0;
 var tempColorp = "black";
 var tempTimep = 0;
-var DoneLoading = false;
 
 function updateDrawingBoard(board) {
-    DoneLoading = false
     for (var i = 0; i < board.length - 1; i++) {
         var tempSplitArrc = board[i].split(',')
         var tempXc = tempSplitArrc[0]
@@ -241,7 +253,7 @@ function updateDrawingBoard(board) {
         ctx.fillRect(tempXc, tempYc, 2, 2);
         ctx.closePath();
     }
-    DoneLoading = true;
+    
 
 }
 
@@ -259,11 +271,11 @@ function updateDraw(pX, pY, cX, cY, cColor) {
 function storeToFirebase(thisArray, ThisUser) {
     // Store thisArray to firebase into ThisUser
     for (var i = 0; i < thisArray.length; i++) {
-        db.collection(thisCollection).doc(ThisUser).update({
+        db.collection(thisCollection).doc(thisPersonDocName).update({
             drawing: firebase.firestore.FieldValue.arrayUnion(thisArray[i])
         })
     }
-    db.collection(thisCollection).doc(ThisUser).update({
+    db.collection(thisCollection).doc(thisPersonDocName).update({
         drawing: firebase.firestore.FieldValue.arrayUnion('newline' + storeToFirebaseCounter)
     })
     storeToFirebaseCounter++;
@@ -271,13 +283,12 @@ function storeToFirebase(thisArray, ThisUser) {
 
 function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
-    db.collection(thisCollection).doc(OtherUser).get().then(function(doc) {
+    db.collection(thisCollection).doc(otherPersonDocName).get().then(function(doc) {
         otherBoard = doc.data().drawing;
         updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
-    })
-    if (DoneLoading) {
-        db.collection(thisCollection).doc(OtherUser).set({
+        db.collection(thisCollection).doc(otherPersonDocName).set({
             drawing: []
         })
-    }
+    })
+    console.log("getFromFirebase")
 }
