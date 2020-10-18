@@ -32,7 +32,7 @@ function createUser(email, password) {
 				}).then(() => {
 					auth.signOut().then(() => {
 						console.log("sent");
-						document.location.replace('login.html');
+						drawCheck();
 					});
 				});
 			});
