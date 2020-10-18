@@ -65,9 +65,8 @@ auth.onAuthStateChanged((user) => {
 						let elements = `
 						<div class='search-result'>
 							<img class='search-result-profilePic' src="${url}" >
-							<div class='search-result-data>
+							<div class='search-result-data'>
 								<div class='search-result-name'>${dataOther.name}</div>
-								<hr>
 								<p>
 									${commonTags}
 								</p>
