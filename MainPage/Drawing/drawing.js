@@ -6,15 +6,19 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var initDate = new Date() // update board after a certain time interval with % division
 
+$('main').append(
+    `<a class="action-button primary-background white fade" href='../chat/chat.html${queryString}'><i class="fas fa-chevron-left"></i></a>`
+)
+
 var canvas, ctx, flag = false,
-        prevX = 0,
-        currX = 0,
-        prevY = 0,
-        currY = 0,
-        dot_flag = false;
+    prevX = 0,
+    currX = 0,
+    prevY = 0,
+    currY = 0,
+    dot_flag = false;
 
 var x = "black",
-y = 2;
+    y = 2;
 // We prob need a timer to constantly store and update the other persons array
 otherBoard = []        //  <We should store the firebase thing here
 // sample drawing (1 STROKE MOUSE DOWN TO MOUSE UP)
@@ -48,11 +52,11 @@ let idsSaved = true;
 
 // get the individual user ID's
 auth.onAuthStateChanged((user) => {
-	if (user) {
-		thisPerson = auth.currentUser.uid;
-		otherPerson = urlParams.get("id");
-		thisPersonDocName = thisPerson + "TO" + otherPerson;
-		otherPersonDocName = otherPerson + "TO" + thisPerson;
+    if (user) {
+        thisPerson = auth.currentUser.uid;
+        otherPerson = urlParams.get("id");
+        thisPersonDocName = thisPerson + "TO" + otherPerson;
+        otherPersonDocName = otherPerson + "TO" + thisPerson;
         // initilaizes the unique document/drawing log if they do not already exist
         db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
             if (!docSnapshot.exists) {
@@ -62,12 +66,12 @@ auth.onAuthStateChanged((user) => {
                 db.collection(thisCollection).doc(otherPersonDocName).set({
                     drawing: []
                 })
-        }
-        });  
+            }
+        });
         idsSaved = true;
-	} else {
-		document.location.replace("/login.html");
-	}
+    } else {
+        document.location.replace("/login.html");
+    }
 });
 
 
@@ -77,7 +81,7 @@ function init() {
     ctx = canvas.getContext("2d");
     w = canvas.width;
     h = canvas.height;
-      
+
     canvas.addEventListener("mousemove", function (e) {
         if (idsSaved) {
             findxy('move', e)
@@ -90,7 +94,7 @@ function init() {
     canvas.addEventListener("mousedown", function (e) {
         if (idsSaved) {
             findxy('down', e)
-        } 
+        }
     }, false);
     canvas.addEventListener("mouseup", function (e) {
         if (idsSaved) {
@@ -99,14 +103,14 @@ function init() {
                 // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
                 storeToFirebase(firebase_arr, thisPersonDocName);
                 firebase_arr = [];
-                getFromFirebase(otherPersonDocName); 
+                getFromFirebase(otherPersonDocName);
             }
-        }    
+        }
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         if (idsSaved) {
             findxy('out', e)
-            getFromFirebase(otherPersonDocName); 
+            getFromFirebase(otherPersonDocName);
             // SEND ARRAY TO FIREBASE HERE -------------------------------------
             if (firebase_arr.length > 0) {
                 storeToFirebase(firebase_arr, thisPersonDocName);
@@ -246,7 +250,7 @@ function updateDrawingBoard(board) {
         ctx.fillRect(tempXc, tempYc, 2, 2);
         ctx.closePath();
     }
-    
+
 
 }
 
@@ -276,7 +280,7 @@ function storeToFirebase(thisArray, ThisUser) {
 
 function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
-    db.collection(thisCollection).doc(otherPersonDocName).get().then(function(doc) {
+    db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
         otherBoard = doc.data().drawing;
         updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
         db.collection(thisCollection).doc(otherPersonDocName).set({
