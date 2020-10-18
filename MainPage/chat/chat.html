@@ -1,39 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<head>
-	<meta charset="utf-8">
-	<title>Chat</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-
-<body>
-	<script>
-		(function (t, a, l, k, j, s) {
-			s = a.createElement('script');
-			s.async = 1;
-			s.src = "https://cdn.talkjs.com/talk.js";
-			a.head.appendChild(s);
-			k = t.Promise;
-			t.Talk = {
-				v: 3,
-				ready: {
-					then: function (f) {
-						if (k) return new k(function (r, e) {
-							l.push([f, r, e])
-						});
-						l
-							.push([f])
-					},
-					catch: function () {
-						return k && new k()
-					},
-					c: l
-				}
-			};
-		})(window, document, []);
-	</script>
-
 	<head>
 		<meta charset="utf-8">
 		<title>Chat</title>
@@ -108,19 +75,16 @@
 		<aside class='pear-holder white-background'>
 		</aside>
 
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
 		<script src="../../firebase/config.js" charset="utf-8"></script>
 		<script src="chat.js" charset="utf-8"></script>
-	</body>
+		<!-- <script src="../main.js" charset="utf-8"></script> -->
 
-	<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-	<script src="../../firebase/config.js" charset="utf-8"></script>
-	<script src="chat.js" charset="utf-8"></script>
-</body>
+	</body>
 
 </html>
