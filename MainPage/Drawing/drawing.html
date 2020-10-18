@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Chat</title>
-	</head>
-	<body onload="init()">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HackNC 2020</title>
+	<!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+	<link rel="stylesheet" href="../../styles.css">
+	<link rel="stylesheet" href="../../colors.css">
+	<link rel="stylesheet" href="../main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/d38a5bbed1.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="primary-background profile">
+	<header class='header'>
+		<h2 class='white'>Pear Peers</h2>
+	</header>
+	<nav class='nav'>
+		<ul>
+			<li>
+				<a class="fade" href='../main.html'>
+					<i class="fas fa-home"></i>
+				</a>
+			</li>
+			<li>
+				<a class="fade" href='../profile.html'>
+					<i class="fas fa-user"></i>
+				</a>
+			</li>
+			<li>
+				<a class="fade" href='../../index.html'>
+					<i class="fas fa-sign-out-alt"></i>
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<aside class='aside'>
+		<img id='profile-pic' src="../../assets/GenericProfile.png" alt="">
+		<h2 id="hello-name" class="white">Drawing With: </h2>
+	</aside>
+	<div class='aside-background'><img src="../../assets/orangeblue.jpg" alt=""></div>
+	<main class='main white-background'>
 		<canvas id="can" width="400" height="400" style="border:5px solid;"></canvas>
 
 		<div style="width:20px;height:20px;background:green;" id="green" onclick="color(this)"></div>
@@ -21,13 +57,49 @@
 
 		<input type="button" value="clear" style="position: relative; top: 5px" id="clr" size="23" onclick="erase()">
 		<input type="button" value="save" style="position: relative; top: 5px" id="btn" size="30" onclick="save()">
+	</main>
+	<aside class='pear-holder white-background'>
+	</aside>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+	<script src="../../firebase/config.js"></script>
+	<script type="text/javascript" src="drawing.js"></script>
+</body>
 
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-		<script src="../../firebase/config.js"></script>
-		<script type="text/javascript" src="drawing.js"></script>
-	</body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chat</title>
+</head>
+
+<body onload="init()">
+	<canvas id="can" width="400" height="400" style="border:5px solid;"></canvas>
+
+	<div style="width:20px;height:20px;background:green;" id="green" onclick="color(this)"></div>
+	<div style="width:20px;height:20px;background:blue;" id="blue" onclick="color(this)"></div>
+	<div style="width:20px;height:20px;background:red;" id="red" onclick="color(this)"></div>
+	<div style="width:20px;height:20px;background:yellow;" id="yellow" onclick="color(this)"></div>
+	<div style="width:20px;height:20px;background:orange;" id="orange" onclick="color(this)"></div>
+	<div style="width:20px;height:20px;background:black;" id="black" onclick="color(this)"></div>
+
+	<div style="width:18px;height:18px;background:white;border:.5px solid;" id="white" onclick="color(this)"><img style="width:100%;height:100%;"id="eraserimg" src="eraser_img.png"></div>
+
+	<img id="canvasimg" style="display:none;">
+
+	<input type="button" value="clear" style="position: relative; top: 5px" id="clr" size="23" onclick="erase()">
+	<input type="button" value="save" style="position: relative; top: 5px" id="btn" size="30" onclick="save()">
+
+
+</body>
+
+</html> -->
