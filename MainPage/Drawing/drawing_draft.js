@@ -26,15 +26,32 @@ var otherPerson;
 var thisPersonDocName;
 var otherPersonDocName;
 
+thisPerson = "User2"
+otherPerson = "User1"
+thisPersonDocName = thisPerson + "TO" + otherPerson;
+otherPersonDocName = otherPerson + "TO" + thisPerson;
+
 let idsSaved = false;
 
+// get the individual user ID's
 auth.onAuthStateChanged((user) => {
 	if (user) {
 		thisPerson = auth.currentUser.uid;
 		otherPerson = urlParams.get("id");
 		thisPersonDocName = thisPerson + "TO" + otherPerson;
 		otherPersonDocName = otherPerson + "TO" + thisPerson;
-		idsSaved = true;
+        // initilaizes the unique document/drawing log if they do not already exist
+        db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+            if (!docSnapshot.exists) {
+                db.collection(thisCollection).doc(thisPersonDocName).set({
+                    drawing: []
+                })
+                db.collection(thisCollection).doc(otherPersonDocName).set({
+                    drawing: []
+                })
+        }
+        });  
+        idsSaved = true;
 	} else {
 		document.location.replace("/login.html");
 	}
@@ -47,30 +64,38 @@ function init() {
     h = canvas.height;
 
     canvas.addEventListener("mousemove", function (e) {
-        var date = new Date();
-        if ((date.getTime() - initDate.getTime()) % 500 == 0) {
-            getFromFirebase(otherPersonDocName);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
+        if (idsSaved) {
+            var date = new Date();
+            if ((date.getTime() - initDate.getTime()) % 500 == 0) {
+                getFromFirebase(otherPersonDocName);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
+            }
+            findxy('move', e)
         }
-        findxy('move', e)
     }, false);
     canvas.addEventListener("mousedown", function (e) {
-        findxy('down', e)
+        if (idsSaved) {
+            findxy('down', e)
+        } 
     }, false);
     canvas.addEventListener("mouseup", function (e) {
-        findxy('up', e)
-        if (firebase_arr.length > 0) {
-            // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
-            storeToFirebase(firebase_arr, thisPersonDocName);
-            firebase_arr = [];
-        }
+        if (idsSaved) {
+            findxy('up', e)
+            if (firebase_arr.length > 0) {
+                // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
+                storeToFirebase(firebase_arr, thisPersonDocName);
+                firebase_arr = [];
+            }
+        }    
     }, false);
     canvas.addEventListener("mouseout", function (e) {
-        findxy('out', e)
+        if (idsSaved) {
+            findxy('out', e)
 
-        // SEND ARRAY TO FIREBASE HERE -------------------------------------
-        if (firebase_arr.length > 0) {
-            storeToFirebase(firebase_arr, thisPersonDocName);
-            firebase_arr = [];
+            // SEND ARRAY TO FIREBASE HERE -------------------------------------
+            if (firebase_arr.length > 0) {
+                storeToFirebase(firebase_arr, thisPersonDocName);
+                firebase_arr = [];
+            }
         }
     }, false);
 
