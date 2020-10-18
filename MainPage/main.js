@@ -9,7 +9,7 @@ function search() {
 					if (data.name && data.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
 						storage.ref(data.profilePic).getDownloadURL().then((url) => {
 							let elements = `
-							<div class='search-result secondary-background fade' id="${dataOther.uid}">
+							<div class='search-result secondary-background fade' id="${data.uid}">
 								<img class='search-result-profilePic' src="${url}" >
 								<div class='search-result-data white'>
 									<h3 class='search-result-name'>${data.name}</h3>
