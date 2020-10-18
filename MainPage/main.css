@@ -219,3 +219,21 @@ main input {
 .center-stage {
     max-width: 100vw !important
 }
+
+.action-button {
+    position: fixed;
+    margin: 2rem;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 4rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.action-button:hover {
+    opacity: 90%;
+}

@@ -35,7 +35,34 @@ Talk.ready.then(function () {
 					var inbox = talkSession.createChatbox(conversation);
 					inbox.mount(document.getElementById("talkjs-container"));
 				});
+
+				let data = doc.data();
+				let friends = data.friends;
+
+				friends.forEach((friend) => {
+					db.collection("users").doc(friend).get().then((docFriend) => {
+						let friendData = docFriend.data();
+
+						storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
+							let elements = `
+							<a class="active-chat fade" href=chat/chat.html?id=${friendData.uid}>
+								<img class='chat-profilePic' src=${url} >
+								<h3 class='chat-name'>${friendData.name}</h3>
+							</a>`;
+							$("#chat-list").append(elements);
+						});
+					});
+				});
+
+				if (data.tags.length == 0) {
+					document.location.replace("profile.html");
+				}
 			});
 		}
 	});
+
+	console.log(queryString)
+	$('main').append(
+		`<a class="action-button primary-background white fade" href='../Drawing/drawing.html${queryString}'><i class="fas fa-pen"></i></a>`
+	)
 });
