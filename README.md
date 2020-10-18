@@ -5,7 +5,7 @@ It is built on Google Cloud Platform leveraging Google Kubernetes Engine and Goo
 
 **Authors:**
  - Abhay Zala - zala.abhay@gmail.com
- - Lucas Zhang - lucas.h.zhang@gmail.com
+ - Lucas Zhang - lucas_h_zhang@hotmail.com
  - David Lu - davidlu51412@gmail.com
 
 ## Getting Started
