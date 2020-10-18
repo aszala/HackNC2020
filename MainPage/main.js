@@ -7,7 +7,7 @@ function search() {
 			if (data.name.includes(query)) {
 				storage.ref(data.profilePic).getDownloadURL().then((url) => {
 					let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + data.name + "</div><div class='connect-button' onclick='makePeer('" + data.uid + "')'>Make Peer</div></div></div>";
-	
+
 					$("#search-results-name").append(elements);
 				});
 			}
@@ -37,6 +37,10 @@ auth.onAuthStateChanged((user) => {
 					});
 				});
 			});
+
+			if (data.tags.length == 0) {
+				document.location.replace("profile.html");
+			}
 
 			db.collection("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
 				snap.forEach((docOther) => {
