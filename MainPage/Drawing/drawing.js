@@ -27,48 +27,48 @@ var thisPersonDocName;
 var otherPersonDocName;
 
 // TESTING
-thisPerson = "User2"
-otherPerson = "User1"
-thisPersonDocName = thisPerson + "TO" + otherPerson;
-otherPersonDocName = otherPerson + "TO" + thisPerson;
+// thisPerson = "User2"
+// otherPerson = "User1"
+// thisPersonDocName = thisPerson + "TO" + otherPerson;
+// otherPersonDocName = otherPerson + "TO" + thisPerson;
 
-db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
-    if (!docSnapshot.exists) {
-        db.collection(thisCollection).doc(thisPersonDocName).set({
-            drawing: []
-        })
-        db.collection(thisCollection).doc(otherPersonDocName).set({
-            drawing: []
-        })
-    }
-});  
+// db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+//     if (!docSnapshot.exists) {
+//         db.collection(thisCollection).doc(thisPersonDocName).set({
+//             drawing: []
+//         })
+//         db.collection(thisCollection).doc(otherPersonDocName).set({
+//             drawing: []
+//         })
+//     }
+// });  
 
 
-let idsSaved = true;
+let idsSaved = false;
 
 // get the individual user ID's
-// auth.onAuthStateChanged((user) => {
-// 	if (user) {
-// 		thisPerson = auth.currentUser.uid;
-// 		otherPerson = urlParams.get("id");
-// 		thisPersonDocName = thisPerson + "TO" + otherPerson;
-// 		otherPersonDocName = otherPerson + "TO" + thisPerson;
-//         // initilaizes the unique document/drawing log if they do not already exist
-//         db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
-//             if (!docSnapshot.exists) {
-//                 db.collection(thisCollection).doc(thisPersonDocName).set({
-//                     drawing: []
-//                 })
-//                 db.collection(thisCollection).doc(otherPersonDocName).set({
-//                     drawing: []
-//                 })
-//         }
-//         });  
-//         idsSaved = true;
-// 	} else {
-// 		document.location.replace("/login.html");
-// 	}
-// });
+auth.onAuthStateChanged((user) => {
+	if (user) {
+		thisPerson = auth.currentUser.uid;
+		otherPerson = urlParams.get("id");
+		thisPersonDocName = thisPerson + "TO" + otherPerson;
+		otherPersonDocName = otherPerson + "TO" + thisPerson;
+        // initilaizes the unique document/drawing log if they do not already exist
+        db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
+            if (!docSnapshot.exists) {
+                db.collection(thisCollection).doc(thisPersonDocName).set({
+                    drawing: []
+                })
+                db.collection(thisCollection).doc(otherPersonDocName).set({
+                    drawing: []
+                })
+        }
+        });  
+        idsSaved = true;
+	} else {
+		document.location.replace("/login.html");
+	}
+});
 
 
 
