@@ -5,9 +5,16 @@ function search() {
 		db.collection("users").get().then((snap) => {
 			snap.forEach((doc) => {
 				let data = doc.data();
-				if (data.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
+				if (data.name && data.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
 					storage.ref(data.profilePic).getDownloadURL().then((url) => {
-						let elements = "<div class='search-result'><div class='search-result-profilePic-container'><img class='search-result-profilePic' src=" + url + " ></div><div class='search-result-name-container'><div class='search-result-name'>" + data.name + "</div><div class='connect-button' onclick='makePeer('" + data.uid + "')'>Make Peer</div></div></div>";
+						let elements = `
+						<div class='search-result secondary-background fade'>
+							<img class='search-result-profilePic' src="${url}" >
+							<div class='search-result-data white'>
+								<h3 class='search-result-name'>${data.name}</h3>
+								<button class='connect-button' onclick='makePeer('${data.uid}')'>Make Peer</button>
+							</div>
+						</div>`;
 		
 						$("#search-results-name").append(elements);
 					});
@@ -31,7 +38,7 @@ auth.onAuthStateChanged((user) => {
 
 					storage.ref(friendData.profilePic).getDownloadURL().then((url) => {
 						let elements = `
-						<a class="active-chat fade">
+						<a class="active-chat fade" href=chat/chat.html?${friendData.uid}>
 							<img class='chat-profilePic' src=${url} >
 							<h3 class='chat-name'>${friendData.name}</h3>
 						</a>`;
@@ -63,12 +70,12 @@ auth.onAuthStateChanged((user) => {
 
 					storage.ref(dataOther.profilePic).getDownloadURL().then((url) => {
 						let elements = `
-						<div class='search-result'>
+						<div class='search-result primary-background fade'>
 							<img class='search-result-profilePic' src="${url}" >
-							<div class='search-result-data'>
-								<div class='search-result-name'>${dataOther.name}</div>
+							<div class='search-result-data white'>
+								<h3 class='search-result-name'>${dataOther.name}</h3>
 								<p>
-									${commonTags}
+									Similar Tags: ${commonTags}
 								</p>
 								<button class='connect-button' onclick='makePeer('${dataOther.uid}')'>Make Peer</button>
 							</div>
