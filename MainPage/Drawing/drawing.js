@@ -29,6 +29,8 @@ var thisPerson;
 var otherPerson;
 var thisPersonDocName;
 var otherPersonDocName;
+var thisPersonClear;
+var otherPersonClear;
 
 // TESTING
 // thisPerson = "User2"
@@ -57,6 +59,8 @@ auth.onAuthStateChanged((user) => {
         otherPerson = urlParams.get("id");
         thisPersonDocName = thisPerson + "TO" + otherPerson;
         otherPersonDocName = otherPerson + "TO" + thisPerson;
+        thisPersonClear = thisPersonDocName + "clear";
+        otherPersonClear = otherPersonDocName + "clear";
         // initilaizes the unique document/drawing log if they do not already exist
         db.collection(thisCollection).doc(thisPersonDocName).get().then((docSnapshot) => {
             if (!docSnapshot.exists) {
@@ -67,6 +71,16 @@ auth.onAuthStateChanged((user) => {
                     drawing: []
                 })
             }
+        });
+
+        db.collection(thisCollection).doc(otherPersonClear).get().then((docSnapshot) => {
+            db.collection(thisCollection).doc(thisPersonDocName).set({
+                clear: "False"
+            })
+            db.collection(thisCollection).doc(otherPersonDocName).set({
+                clear: "False"
+            })
+            
         });
         idsSaved = true;
     } else {
@@ -160,6 +174,9 @@ function draw() {
 function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
+    db.collection(thisCollection).doc(thisPersonClear).set({
+        clear: "True"
+    })
     firebase_arr = []
     db.collection(thisCollection).doc(thisPersonDocName).update({
         drawing: []
@@ -281,18 +298,33 @@ function storeToFirebase(thisArray, ThisUser) {
 
 function getFromFirebase(OtherUser) {
     // get thisArray from thisUser's account on firebase and return it
-    db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
-        otherBoard = doc.data().drawing;
-        if (otherBoard.length == 0) {
-            ctx.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
-            firebase_arr = []
-        } else {
-            updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
-            db.collection(thisCollection).doc(otherPersonDocName).set({
-                drawing: []
-            })
-        }
+    var isCleared;
+    db.collection(thisCollection).doc(otherPersonClear).get().then(function (doc) {
+        isCleared = doc.data().clear == "True";  
     })
-    console.log("getFromFirebase")
+
+    if (isCleared) {
+        ctx.clearRect(0, 0, w, h);
+        document.getElementById("canvasimg").style.display = "none";
+        db.collection(thisCollection).doc(otherPersonClear).set({
+            clear: "False"
+        })
+        db.collection(thisCollection).doc(thisPersonClear).set({
+            clear: "False"
+        })
+    } else {
+        db.collection(thisCollection).doc(otherPersonDocName).get().then(function (doc) {
+            otherBoard = doc.data().drawing;
+            if (otherBoard.length == 0 && firebase_arr.length > 0) {
+                ctx.clearRect(0, 0, w, h);
+                document.getElementById("canvasimg").style.display = "none";
+                firebase_arr = []
+            } else {
+                updateDrawingBoard(otherBoard)        // UPDATE DRAWING BOARD
+                db.collection(thisCollection).doc(otherPersonDocName).set({
+                    drawing: []
+                })
+            }
+        })
+    }
 }
