@@ -1,7 +1,7 @@
 # Pearpeers - Find a Peer
 HackNC 2020 Project
 The Pearpeers web app connects you with peers to form new friendships while staying safe at home.
-It is built on Google Cloud Platform leveraging Google Kubernetes Engine and Google Firebase.
+It is built on Google Cloud Platform leveraging Google Kubernetes Engine (GKC / K8S) with Docker and Google Firebase.
 
 **Authors:**
  - Abhay Zala - zala.abhay@gmail.com
