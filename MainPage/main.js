@@ -41,6 +41,18 @@ auth.onAuthStateChanged((user) => {
 				snap.forEach((docOther) => {
 					let dataOther = docOther.data();
 
+					let commonTag = [];
+					let count = 0;
+					for (let i=0;i<data.tags.length;i++) {
+						if (data.tags[i] in dataOther.tags) {
+							commonTag.push(data.tags[i]);
+							count++;
+							if (count == 5) {
+								break;
+							}
+						}
+					}
+
 					storage.ref(dataOther.profilePic).getDownloadURL().then((url) => {
 						let elements = `
 						<div class='search-result'>
@@ -49,6 +61,9 @@ auth.onAuthStateChanged((user) => {
 							</div><div class='search-result-name-container'>
 							<div class='search-result-name'>${dataOther.name}</div>
 								<button class='connect-button' onclick='makePeer('"${dataOther.uid}"')'>Make Peer</button>
+							</div>
+							<div>
+								${commonTag[0]}${commonTag[1]}${commonTag[2]}${commonTag[3]}${commonTag[4]}${commonTag[5]}
 							</div>
 						</div>`;
 						$("#similar-tags").append(elements);

@@ -1,4 +1,4 @@
-var firebase_arr = []; 
+var firebase_arr = [];
 var update_counter = 0;
 var storeToFirebaseCounter = 0;
 
@@ -21,8 +21,24 @@ otherBoard = []        //  <We should store the firebase thing here
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
 var thisCollection = "Drawing";  // I don't think this needs to change, since we store all users drawings in here
-var thisPerson = "User2";
-var otherPerson = "User1"
+var thisPerson;
+var otherPerson;
+var thisPersonDocName;
+var otherPersonDocName;
+
+let idsSaved = false;
+
+auth.onAuthStateChanged((user) => {
+	if (user) {
+		thisPerson = auth.currentUser.uid;
+		otherPerson = urlParams.get("id");
+		thisPersonDocName = thisPerson + "TO" + otherPerson;
+		otherPersonDocName = otherPerson + "TO" + thisPerson;
+		idsSaved = true;
+	} else {
+		document.location.replace("/login.html");
+	}
+});
 
 function init() {
     canvas = document.getElementById('can');
@@ -33,7 +49,7 @@ function init() {
     canvas.addEventListener("mousemove", function (e) {
         var date = new Date();
         if ((date.getTime() - initDate.getTime()) % 500 == 0) {
-            getFromFirebase(otherPerson);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
+            getFromFirebase(otherPersonDocName);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
         }
         findxy('move', e)
     }, false);
@@ -44,22 +60,22 @@ function init() {
         findxy('up', e)
         if (firebase_arr.length > 0) {
             // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = [];
         }
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
-        
+
         // SEND ARRAY TO FIREBASE HERE -------------------------------------
         if (firebase_arr.length > 0) {
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = [];
-        } 
+        }
     }, false);
-    
+
 }
-    
+
 function color(obj) {
     switch (obj.id) {
         case "green":
@@ -84,7 +100,7 @@ function color(obj) {
 
 
 }
-    
+
 function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
@@ -99,10 +115,10 @@ function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
     firebase_arr = []
-    db.collection(thisCollection).doc(thisPerson).update({
+    db.collection(thisCollection).doc(thisPersonDocName).update({
         drawing: []
     })
-    db.collection(thisCollection).doc(otherPerson).update({
+    db.collection(thisCollection).doc(otherPersonDocName).update({
         drawing: []
     })
 
@@ -120,7 +136,7 @@ function findxy(res, e) {
         if (dot_flag) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = []
             update_counter = (update_counter + 1 % 5)
             ctx.beginPath();
@@ -172,7 +188,7 @@ function updateDrawingBoard(board) {
         var tempXc = tempSplitArrc[0]
         var tempYc = tempSplitArrc[1]
         var tempColorc = tempSplitArrc[2]
-        var tempTimec = tempSplitArrc[3]  
+        var tempTimec = tempSplitArrc[3]
         if (board[i].includes("newline")) {
             ctx.beginPath();
             ctx.fillStyle = tempColorc;
@@ -192,7 +208,7 @@ function updateDrawingBoard(board) {
         var tempXc = tempSplitArrc[0]
         var tempYc = tempSplitArrc[1]
         var tempColorc = tempSplitArrc[2]
-        var tempTimec = tempSplitArrc[3] 
+        var tempTimec = tempSplitArrc[3]
         // CREATES A DOT
         ctx.beginPath();
         ctx.fillStyle = tempColorc;
@@ -239,4 +255,3 @@ function getFromFirebase(OtherUser) {
         })
     }
 }
-
