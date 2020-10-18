@@ -147,12 +147,12 @@ main input {
 }
 
 .chat-profilePic {
-    width: 3rem;
-    height: 3rem;
+    width: 48px;
+	margin: auto;
+    height: 48px;
     object-fit: cover;
-    border-style: solid;
-    border-radius: 3rem;
-    border-width: 2px;
+    border-radius: 100%;
+    border: solid 2px white;
 }
 
 .chat-name {
@@ -177,7 +177,7 @@ main input {
     padding: 1rem;
     display: flex;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: 100%;
 }
 
 .search-result:hover {
@@ -187,7 +187,7 @@ main input {
 .search-result-profilePic {
     width: 5rem;
     height: 5rem;
-    border-radius: 5rem;
+    border-radius: 100%;
     object-fit: cover;
     border-color: white;
     border-style: solid;
@@ -228,7 +228,7 @@ main input {
     display: flex;
     width: 4rem;
     height: 4rem;
-    border-radius: 4rem;
+    border-radius: 100%;
     justify-content: center;
     align-items: center;
     text-decoration: none;
