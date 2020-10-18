@@ -31,7 +31,7 @@ auth.onAuthStateChanged((user) => {
 						let elements = `
 						<a class="active-chat fade">
 							<img class='chat-profilePic' src=${url} >
-							<p class='chat-name'>${friendData.name}</p>
+							<h3 class='chat-name'>${friendData.name}</h3>
 						</a>`;
 						$("#chat-list").append(elements);
 					});
@@ -58,15 +58,16 @@ auth.onAuthStateChanged((user) => {
 					storage.ref(dataOther.profilePic).getDownloadURL().then((url) => {
 						let elements = `
 						<div class='search-result'>
-							<div class='search-result-profilePic-container'>
-								<img class='search-result-profilePic' src="${url}" >
-							</div><div class='search-result-name-container'>
-							<div class='search-result-name'>${dataOther.name}</div>
+							<img class='search-result-profilePic' src="${url}" >
+							<div class='search-result-data>
+								<div class='search-result-name'>${dataOther.name}</div>
+								<hr>
+								<p>
+									${commonTags}
+								</p>
 								<button class='connect-button' onclick='makePeer('${dataOther.uid}')'>Make Peer</button>
 							</div>
-							<p>
-								${commonTags}
-							</p>
+							</div>
 						</div>`;
 						$("#similar-tags").append(elements);
 					});
