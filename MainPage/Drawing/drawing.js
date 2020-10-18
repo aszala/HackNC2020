@@ -44,7 +44,7 @@ var otherPersonDocName;
 // });  
 
 
-let idsSaved = false;
+let idsSaved = true;
 
 // get the individual user ID's
 auth.onAuthStateChanged((user) => {
@@ -205,14 +205,6 @@ function findxy(res, e) {
             draw();
         }
     }
-}
-
-function save() {
-    document.getElementById("canvasimg").style.border = "2px solid";
-    var dataURL = canvas.toDataURL();
-    document.getElementById("canvasimg").src = dataURL;
-    console.log(document.getElementById("canvasimg").src)
-    document.getElementById("canvasimg").style.display = "inline";
 }
 
 
