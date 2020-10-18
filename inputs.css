@@ -1,0 +1,36 @@
+.textfield {
+    width: 90%;
+    height: 30px;
+    border-radius: 50px;
+    background: rgba(100, 100, 100, 0.50);
+    border: solid 2px transparent;
+    color: white;
+    padding: 10px;
+    font-size: 22px;
+}
+
+.textfield:focus {
+    outline:none !important;
+}
+
+.button {
+	display: block;
+	width: 150px;
+	height: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid #000;
+	border-radius: 20px;
+    background-color: rgba(0, 0, 0, .34);
+	-webkit-transition: background-color 500ms ease, color 500ms ease;
+	transition: background-color 500ms ease, color 500ms ease;
+	font-size: 20px;
+	text-align: center;
+	color: inherit;
+	cursor: pointer;
+}
+
+.button:hover {
+	color: #1B1C76;
+	background-color: #428ff4;
+}

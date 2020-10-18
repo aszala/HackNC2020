@@ -117,7 +117,7 @@ main input {
 
 .profile-submit, button {
     border-style: none;
-    background-color: #354F78;
+    background-color: #1B1C76;
     border-radius: 1rem;
     height: 2rem;
     color: white;
@@ -236,4 +236,39 @@ main input {
 
 .action-button:hover {
     opacity: 90%;
+}
+
+
+.textfield {
+    width: 70%;
+    height: 30px;
+	border: solid 2px transparent;
+    border-bottom: solid 2px black;
+    color: white;
+    padding: 10px;
+    font-size: 22px;
+}
+
+.textfield:focus {
+    outline:none !important;
+}
+
+.button {
+	display: inline;
+	width: 150px;
+	height: 50px;
+	border: 1px solid #000;
+	border-radius: 20px;
+    background-color: rgba(0, 0, 0, .34);
+	-webkit-transition: background-color 500ms ease, color 500ms ease;
+	transition: background-color 500ms ease, color 500ms ease;
+	font-size: 20px;
+	text-align: center;
+	color: inherit;
+	cursor: pointer;
+}
+
+.button:hover {
+	color: white;
+	background-color: #1B1C76;
 }
