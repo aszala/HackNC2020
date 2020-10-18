@@ -54,7 +54,7 @@ h2 {
     top: 0px;
     left: 0px;
     z-index: 2;
-    background-image:linear-gradient(rgb(255, 0, 25), rgb(72, 38, 224));
+    background-image:linear-gradient(rgb(68, 0, 255), rgb(206, 27, 27));
     opacity: 0.5;
 }
 .header-grabber-text {
