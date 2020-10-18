@@ -40,6 +40,7 @@ auth.onAuthStateChanged((user) => {
 		db.collection("users").doc(auth.currentUser.uid).onSnapshot((doc) => {
 			let data = doc.data();
 			let friends = data.friends;
+			$("#chat-list").html("");
 
 			friends.forEach((friend) => {
 				db.collection("users").doc(friend).get().then((docFriend) => {
