@@ -40,6 +40,10 @@ auth.onAuthStateChanged((user) => {
 				});
 			});
 
+			if (data.tags.length == 0) {
+				document.location.replace("profile.html");
+			}
+
 			db.collection("users").where("tags", "array-contains-any", data.tags).get().then((snap) => {
 				snap.forEach((docOther) => {
 					let dataOther = docOther.data();
