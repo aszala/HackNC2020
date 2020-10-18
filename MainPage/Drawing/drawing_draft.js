@@ -21,8 +21,13 @@ otherBoard = []        //  <We should store the firebase thing here
 // EX: repeat every 5 seconds updateDrawingBoard(otherArr)
 
 var thisCollection = "Drawing";  // I don't think this needs to change, since we store all users drawings in here
-var thisPerson = "User2";
-var otherPerson = "User1"
+var thisPerson = "User1";
+var otherPerson = "User2";
+var thisPersonDocName = thisPerson + "TO" + otherPerson;
+var otherPersonDocName = otherPerson + "TO" + thisPerson;
+
+// Create a new Document in drawing for these Users
+
 
 function init() {
     canvas = document.getElementById('can');
@@ -33,7 +38,7 @@ function init() {
     canvas.addEventListener("mousemove", function (e) {
         var date = new Date();
         if ((date.getTime() - initDate.getTime()) % 500 == 0) {
-            getFromFirebase(otherPerson);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
+            getFromFirebase(otherPersonDocName);        // GET OTHER PERSONS ARRAY FROM THEIR ACC
         }
         findxy('move', e)
     }, false);
@@ -44,7 +49,7 @@ function init() {
         findxy('up', e)
         if (firebase_arr.length > 0) {
             // SEND ARRAY TO FIREBASE -> scroll down to another place were we have to store into firebase -------------------------------------
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = [];
         }
     }, false);
@@ -53,7 +58,7 @@ function init() {
         
         // SEND ARRAY TO FIREBASE HERE -------------------------------------
         if (firebase_arr.length > 0) {
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = [];
         } 
     }, false);
@@ -99,10 +104,10 @@ function erase() {
     ctx.clearRect(0, 0, w, h);
     document.getElementById("canvasimg").style.display = "none";
     firebase_arr = []
-    db.collection(thisCollection).doc(thisPerson).update({
+    db.collection(thisCollection).doc(thisPersonDocName).update({
         drawing: []
     })
-    db.collection(thisCollection).doc(otherPerson).update({
+    db.collection(thisCollection).doc(otherPersonDocName).update({
         drawing: []
     })
 
@@ -120,7 +125,7 @@ function findxy(res, e) {
         if (dot_flag) {
             var d = new Date();
             firebase_arr.push(currX + "," + currY + "," + x + "," + d.getTime())
-            storeToFirebase(firebase_arr, thisPerson);
+            storeToFirebase(firebase_arr, thisPersonDocName);
             firebase_arr = []
             update_counter = (update_counter + 1 % 5)
             ctx.beginPath();
