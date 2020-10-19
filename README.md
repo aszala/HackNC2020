@@ -9,10 +9,10 @@ It is built on Google Cloud Platform leveraging Google Kubernetes Engine (GKC / 
  - David Lu - davidlu51412@gmail.com
 
 ## Getting Started
-Just simply open this site to use the app:  http://pearpeers.space
+Just simply open this site to use the app:  http://pearpeers.space (this url is a bit unstable, if it doesnt work, please try to access it here http://pearpeers.lucaszhang.net)
 
 # Architecture
-Pearpeers was built using the latest Google Cloud Technologies. Users simply make an account on the site (http://pearpeers.space) and provide any interests they have, then they are suggested other users who have similar interests. Users can also directly search for their friends if they want to make a 'Pear' with any existing friends. Users who have 'Peared' can also share a drawing board and draw together.
+Pearpeers was built using the latest Google Cloud Technologies. Users simply make an account on the site (http://pearpeers.space or http://pearpeers.lucaszhang.net) and provide any interests they have, then they are suggested other users who have similar interests. Users can also directly search for their friends if they want to make a 'Pear' with any existing friends. Users who have 'Peared' can also share a drawing board and draw together.
 
 ## Frontend
 Pearpeers frontend was built using HTML/CSS and JS/jQuery. The domain was created using Domain.com.
