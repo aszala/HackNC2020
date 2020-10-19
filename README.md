@@ -23,12 +23,14 @@ Pearpeers frontend was built using HTML/CSS and JS/jQuery. The domain was create
 
 # Submission Categories
  - Best Hack for Accessibility / Inclusivity - Explorer
- - Best Hack for Healthcare - Explorer
- - Best General Hack - Explorer
  - Best Use of Google Cloud - COVID-19 Hackathon Fund
  - MLH - Best use of Google Cloud
  - MLH - Best Domain Registered with Domain.com
  - Best Hack for Group Living in 2020
+
+# Winning Categories
+ - MLH - Best use of Google Cloud (1st)
+ - Best Hack for Accessibility / Inclusivity - Explorer (2nd)
 
 # Bug Reporting
 Please feel free to open a issue if you experience any issue opening the application. Please try to be as specific as you can and include steps to reproduce the issue if possible.
